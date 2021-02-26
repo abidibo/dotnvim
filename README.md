@@ -193,7 +193,7 @@ Display css colors
 | \ge | Gedit |
 | \gr | Gread |
 | \gw | Gwrite |
-| \gl | Interactive git log |
+| \gl | Interactive git log. ctrl-o to go back. |
 | \gp | Ggrep "insert" |
 | \gm | Gmove "insert" |
 | \gb | Git branch "insert" |
