@@ -1,5 +1,20 @@
 {
-  "eslint.filetypes": ["javascript", "typescript", "typescriptreact", "javascriptreact", "typescript.tsx"],
-  "coc.preferences.diagnostic.virtualText": true,
-  "coc.preferences.jumpCommand": "vsplit"
+    "coc.preferences.jumpCommand": "vsplit",
+    "diagnostic.checkCurrentLine": true,
+    "python.formatting.provider": "autopep8",
+    "diagnostic.showUnused": false,
+    "translator.toLang": "en",
+    "translator.engines": ["google"],
+    "css.validate": false,
+    "less.validate": false,
+    "scss.validate": false,
+    "wxss.validate": false,
+    "stylelintplus.autoFixOnFormat": true,
+    "eslint.format.enable": true,
+    "prettier.eslintIntegration": true,
+    "emmet.includeLanguages": {
+	    "vue-html": "html",
+	    "htmldjango": "html",
+        "javascript": "javascriptreact"
+    }
 }

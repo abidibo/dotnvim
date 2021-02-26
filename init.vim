@@ -2,9 +2,13 @@ call plug#begin("~/.config/nvim/plugged")
   " =============================================================
   " Plugin Section
   " =============================================================
- 
+  "
+  " local vimrc
+  Plug 'MarcWeber/vim-addon-local-vimrc'
+
   " theme
-  Plug 'morhetz/gruvbox'
+  " Plug 'morhetz/gruvbox'
+  Plug 'joshdick/onedark.vim'
 
   " sidebar nav
   Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -16,8 +20,9 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'junegunn/fzf.vim'
 
   " code completion
+  " install django-stubs package for Django!
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-tsserver', 'coc-eslint', 'coc-snippets', 'coc-tag', 'coc-pyright']
+  let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-tsserver', 'coc-eslint', 'coc-snippets', 'coc-tag', 'coc-pyright', 'coc-marketplace', 'coc-translator', 'coc-sh', 'coc-react-refactor', 'coc-styled-components', 'coc-prettier', 'coc-pairs']
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
 
@@ -25,6 +30,7 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'tpope/vim-fugitive'
   Plug 'gregsexton/gitv'
   Plug 'kablamo/vim-git-log'
+  " this slows down Gcommit, keeping it for now
   Plug 'jaxbot/github-issues.vim'
 
   " typescript stuff
@@ -45,7 +51,7 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'terryma/vim-multiple-cursors'
 
   " pairs
-  Plug 'jiangmiao/auto-pairs'
+  " Plug 'jiangmiao/auto-pairs'
 
   " commentary
   Plug 'tpope/vim-commentary'
@@ -78,6 +84,8 @@ call plug#begin("~/.config/nvim/plugged")
   " syntax and snippets
   " Plug 'isRuslan/vim-es6' 
 
+  Plug 'ap/vim-css-color'
+
 call plug#end()
 
 " =============================================================
@@ -93,6 +101,9 @@ set encoding=utf-8
 
 " leader
 let mapleader = ','
+
+" enable mouse
+set mouse=a
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -193,16 +204,18 @@ function! OpenTerminal()
   split term://bash
   resize 10
 endfunction
-nnoremap <c-n> :call OpenTerminal()<CR>
+nnoremap <c-t> :call OpenTerminal()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " navigation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" gruvbox
+" Colorscheme
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd vimenter * ++nested colorscheme gruvbox
+" autocmd vimenter * ++nested colorscheme gruvbox
+syntax on
+colorscheme onedark
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -214,8 +227,8 @@ let NERDTreeIgnore = ['\.pyc$']
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fzf
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:fzf_launcher='gnome-terminal --disable-factory -x bash -ic %s'
-let g:fzf_height='40%'
+"let g:fzf_launcher='gnome-terminal --disable-factory -x bash -ic %s'
+"let g:fzf_height='40%'
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 map <space>f :Files<CR>
 map <space>b :Buffers<CR>
@@ -338,6 +351,9 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
+" Prettier
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
@@ -360,6 +376,13 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+" Translations
+nmap <Leader>t <Plug>(coc-translator-p)
+vmap <Leader>t <Plug>(coc-translator-pv)
+" replace
+nmap <Leader>tr <Plug>(coc-translator-r)
+vmap <Leader>tr <Plug>(coc-translator-rv)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " YankRing
@@ -385,8 +408,8 @@ nnoremap \gp :Ggrep<Space>
 nnoremap \gm :Gmove<Space>
 nnoremap \gb :Git branch<Space>
 nnoremap \go :Git checkout<Space>
-nnoremap \gps :Dispatch! git push<CR>
-nnoremap \gpl :Dispatch! git pull<CR>
+nnoremap \gps :Git push<CR>
+nnoremap \gpl :Git pull<CR>
 " Fugitive Conflict Resolution
 nnoremap \gd :Gvdiffsplit!<CR>
 nnoremap gdh :diffget //2<CR>
