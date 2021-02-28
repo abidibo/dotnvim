@@ -17,9 +17,9 @@ Status bar style
 
 ## Additional configuration
 
-**MarcWeber/vim-addon-local-vimrc**
+**embear/vim-localvimrc**
 
-Load local `vimrc`. Useful if you need per project vim configuration (i.e. tab spaces).
+Load local `.lvimrc`. Useful if you need per project vim configuration (i.e. tab spaces).
 
 ## File Browser / Explorer
 

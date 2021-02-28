@@ -3,8 +3,7 @@ call plug#begin("~/.config/nvim/plugged")
   " Plugin Section
   " =============================================================
   "
-  " local vimrc
-  Plug 'MarcWeber/vim-addon-local-vimrc'
+  Plug 'embear/vim-localvimrc'
 
   " theme
   " Plug 'morhetz/gruvbox'
@@ -31,7 +30,7 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'gregsexton/gitv'
   Plug 'kablamo/vim-git-log'
   " this slows down Gcommit, keeping it for now
-  Plug 'jaxbot/github-issues.vim'
+  " Plug 'jaxbot/github-issues.vim'
 
   " typescript stuff
   Plug 'leafgarland/typescript-vim'
@@ -229,7 +228,7 @@ let NERDTreeIgnore = ['\.pyc$']
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "let g:fzf_launcher='gnome-terminal --disable-factory -x bash -ic %s'
 "let g:fzf_height='40%'
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
 map <space>f :Files<CR>
 map <space>b :Buffers<CR>
 map <space>g :GitFiles<CR>
