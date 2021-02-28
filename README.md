@@ -204,6 +204,12 @@ Display css colors
 
 ### Python & Django
 
+Please install necessary packages:
+
+```
+$ pip install neovim autopep8
+```
+
 | Mapping | Category | Decription |
 |---------|----------|------------|
 | ,b      | Python   | Inserts a pdb breakpoint one line above |
