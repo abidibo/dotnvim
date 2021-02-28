@@ -3,7 +3,7 @@ call plug#begin("~/.config/nvim/plugged")
   " Plugin Section
   " =============================================================
   "
-  Plug 'embear/vim-localvimrc'
+  " Plug 'embear/vim-localvimrc'
 
   " theme
   " Plug 'morhetz/gruvbox'
