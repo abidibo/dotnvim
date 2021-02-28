@@ -19,6 +19,8 @@ Status bar style
 
 **embear/vim-localvimrc**
 
+Disabled right now.
+
 Load local `.lvimrc`. Useful if you need per project vim configuration (i.e. tab spaces).
 
 ## File Browser / Explorer
