@@ -207,7 +207,7 @@ Display css colors
 Please install necessary packages:
 
 ```
-$ pip install neovim autopep8
+$ pip install neovim yapf
 ```
 
 | Mapping | Category | Decription |
