@@ -17,11 +17,15 @@ Status bar style
 
 ## Additional configuration
 
-**embear/vim-localvimrc**
+**MarcWeber/vim-addon-local-vimrc**
 
-Disabled right now.
+Load local `.vimrc`. Useful if you need per project vim configuration (i.e. tab spaces).
 
-Load local `.lvimrc`. Useful if you need per project vim configuration (i.e. tab spaces).
+```
+augroup LOCAL_SETUP
+	autocmd FileType html set ft=htmldjango
+augroup end
+```
 
 ## File Browser / Explorer
 

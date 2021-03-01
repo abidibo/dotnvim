@@ -2,6 +2,7 @@
     "coc.preferences.jumpCommand": "vsplit",
     "diagnostic.checkCurrentLine": true,
     "python.formatting.provider": "yapf",
+    "python.linting.enabled": false,
     "diagnostic.showUnused": false,
     "translator.toLang": "en",
     "translator.engines": ["google"],

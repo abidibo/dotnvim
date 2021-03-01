@@ -4,6 +4,7 @@ call plug#begin("~/.config/nvim/plugged")
   " =============================================================
   "
   " Plug 'embear/vim-localvimrc'
+  Plug 'MarcWeber/vim-addon-local-vimrc'
 
   " theme
   " Plug 'morhetz/gruvbox'
@@ -246,6 +247,8 @@ let g:fzf_action = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " coc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+au FileType python let b:coc_root_patterns = ['.git', '.env', 'venv', '.venv', 'setup.cfg', 'setup.py', 'pyrightconfig.json', 'env']
+
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
