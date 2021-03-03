@@ -1,7 +1,7 @@
 {
     "coc.preferences.jumpCommand": "vsplit",
     "diagnostic.checkCurrentLine": true,
-    "python.formatting.provider": "yapf",
+    "python.formatting.provider": "black",
     "python.linting.enabled": false,
     "diagnostic.showUnused": false,
     "translator.toLang": "en",

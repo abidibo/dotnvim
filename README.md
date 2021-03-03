@@ -74,7 +74,8 @@ LSP stuff, vim like VSCode. The following extensions are installed:
 - coc-pairs
 
 **SirVer/ultisnips**    
-**honza/vim-snippets**
+**honza/vim-snippets**    
+**mgedmin/python-imports.vim**
 
 Useful snippets
 
@@ -219,6 +220,7 @@ $ pip install neovim yapf
 | Mapping | Category | Decription |
 |---------|----------|------------|
 | ,b      | Python   | Inserts a pdb breakpoint one line above |
+| :ImportName ctrl-r ctrl-w | Python | Auto import symbol under cursor |
 | ,.v     | Django template | Inserts a variable |
 | ,.t     | Django template | Inserts a tag |
 | ,.d     | Django template | Inserts an inline comment |

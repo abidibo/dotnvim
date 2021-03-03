@@ -50,6 +50,9 @@ call plug#begin("~/.config/nvim/plugged")
   " multiple selection
   Plug 'terryma/vim-multiple-cursors'
 
+  " indent line
+  Plug 'Yggdroot/indentLine'
+
   " pairs
   " Plug 'jiangmiao/auto-pairs'
 
@@ -85,6 +88,8 @@ call plug#begin("~/.config/nvim/plugged")
   " Plug 'isRuslan/vim-es6' 
 
   Plug 'ap/vim-css-color'
+
+  Plug 'mgedmin/python-imports.vim'
 
 call plug#end()
 
@@ -177,6 +182,8 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
+autocmd FileType html,htmldjango imap <leader>.c </<C-X><C-O><tab><C-F>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " python
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -196,7 +203,7 @@ autocmd FileType html,htmldjango imap <leader>.d {#<space><space>#}<esc>hhi
 set splitright
 set splitbelow
 " turn terminal to normal mode with escape
-tnoremap <Esc> <C-\><C-n>
+" tnoremap <Esc> <C-\><C-n>
 " start terminal in insert mode
 au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 " open terminal on ctrl+n
@@ -205,10 +212,6 @@ function! OpenTerminal()
   resize 10
 endfunction
 nnoremap <c-t> :call OpenTerminal()<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" navigation
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Colorscheme
