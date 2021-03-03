@@ -75,7 +75,8 @@ LSP stuff, vim like VSCode. The following extensions are installed:
 
 **SirVer/ultisnips**    
 **honza/vim-snippets**    
-**mgedmin/python-imports.vim**
+**mgedmin/python-imports.vim**    
+**heavenshell/vim-pydocstring**
 
 Useful snippets
 
@@ -221,6 +222,7 @@ $ pip install neovim yapf
 |---------|----------|------------|
 | ,b      | Python   | Inserts a pdb breakpoint one line above |
 | :ImportName ctrl-r ctrl-w | Python | Auto import symbol under cursor |
+| :Pydocstring | Python | Generates doc string for class or method |
 | ,.v     | Django template | Inserts a variable |
 | ,.t     | Django template | Inserts a tag |
 | ,.d     | Django template | Inserts an inline comment |

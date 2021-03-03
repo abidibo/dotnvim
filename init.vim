@@ -90,6 +90,8 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'ap/vim-css-color'
 
   Plug 'mgedmin/python-imports.vim'
+  " Install doq
+  Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 
 call plug#end()
 
@@ -188,13 +190,15 @@ autocmd FileType html,htmldjango imap <leader>.c </<C-X><C-O><tab><C-F>
 " python
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PEP8
-autocmd FileType python setlocal colorcolumn=80
+" autocmd FileType python setlocal colorcolumn=80
 " debug
 noremap <leader>b Oimport pdb; pdb.set_trace() # BREAKPOINT<esc>
 " django template
-autocmd FileType html,htmldjango imap <leader>.v {{<space>}}<esc>hhi
+autocmd FileType html,htmldjango imap <leader>.v {{<space><space><esc>ha
 autocmd FileType html,htmldjango imap <leader>.t {%<space><space>%}<esc>hhi
 autocmd FileType html,htmldjango imap <leader>.d {#<space><space>#}<esc>hhi
+
+let g:pydocstring_doq_path='/home/abidibo/.local/bin/doq'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " terminal
