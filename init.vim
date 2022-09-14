@@ -22,8 +22,11 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'skywind3000/asyncrun.vim'
 
   " file searching
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  Plug 'junegunn/fzf.vim'
+  " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  " Plug 'junegunn/fzf.vim'
+  Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
+  " optional for icon support
+  Plug 'kyazdani42/nvim-web-devicons'
 
   " HTTP request
   Plug 'aquach/vim-http-client'
@@ -34,7 +37,7 @@ call plug#begin("~/.config/nvim/plugged")
   " code completion
   " install django-stubs package for Django!
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  let g:coc_global_extensions = ['coc-tsserver', 'coc-tag', 'coc-syntax', 'coc-pairs', 'coc-css', 'coc-html', 'coc-json', 'coc-translator', 'coc-sh', 'coc-styled-components', 'coc-react-refactor', 'coc-ultisnips', 'coc-marketplace', 'coc-pyright', 'coc-eslint', 'coc-prettier', 'coc-highlight']
+  let g:coc_global_extensions = ['coc-tsserver', 'coc-tag', 'coc-syntax', 'coc-pairs', 'coc-css', 'coc-html', 'coc-json', 'coc-translator', 'coc-sh', 'coc-styled-components', 'coc-react-refactor', 'coc-ultisnips', 'coc-marketplace', 'coc-pyright', 'coc-eslint', 'coc-prettier', 'coc-highlight', 'coc-tasks']
   Plug 'SirVer/ultisnips'
   Plug 'mlaursen/vim-react-snippets'
   Plug 'honza/vim-snippets'
@@ -55,7 +58,7 @@ call plug#begin("~/.config/nvim/plugged")
   " Plug 'romgrk/barbar.nvim'
 
   " paste
-  Plug 'vim-scripts/YankRing.vim'
+  " Plug 'vim-scripts/YankRing.vim'
 
   " undo
   Plug 'sjl/gundo.vim'
@@ -270,29 +273,47 @@ colorscheme onedark
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <C-f> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$']
+autocmd VimEnter *
+            \   if !argc()
+            \ |   Startify
+            \ |   NERDTree
+            \ |   wincmd w
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fzf
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let g:fzf_launcher='gnome-terminal --disable-factory -x bash -ic %s'
-"let g:fzf_height='40%'
-let $FZF_DEFAULT_COMMAND = 'ag --ignore "node_modules" --ignore ".virtualenv" -l -g ""'
-let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
-map <space>f :Files<CR>
-map <space>b :Buffers<CR>
-map <space>g :GitFiles<CR>
-map <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
-map <space>c :Commits<CR>
-map <space>t :Tags<CR>
-map <space>/ :Ag<space>
-imap <c-l> <plug>(fzf-complete-line)
-imap <C-x><C-f> <plug>(fzf-complete-file-ag)
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-s': 'split',
-  \ 'ctrl-v': 'vsplit'
-  \}
+""let g:fzf_launcher='gnome-terminal --disable-factory -x bash -ic %s'
+""let g:fzf_height='40%'
+"let $FZF_DEFAULT_COMMAND = 'ag --ignore "node_modules" --ignore ".virtualenv" -l -g ""'
+"" let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
+"map <space>f :Files<CR>
+"map <space>b :Buffers<CR>
+"map <space>g :GitFiles<CR>
+"map <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+"map <space>c :Commits<CR>
+"map <space>t :AsyncTaskFzf<CR>
+"map <space>/ :Ag<space>
+"imap <c-l> <plug>(fzf-complete-line)
+"imap <C-x><C-f> <plug>(fzf-complete-file-ag)
+"let g:fzf_action = {
+"  \ 'ctrl-t': 'tab split',
+"  \ 'ctrl-s': 'split',
+"  \ 'ctrl-v': 'vsplit'
+"  \}
 
+nnoremap <space>f <cmd>lua require('fzf-lua').files()<CR>
+nnoremap <space>b <cmd>lua require('fzf-lua').buffers()<CR>
+nnoremap <space>c <cmd>lua require('fzf-lua').lsp_definitions()<CR>
+nnoremap <space>l <cmd>lua require('fzf-lua').git_bcommits()<CR>
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> <space>t  :<C-u>CocList tasks<cr>
+nnoremap <space>/ <cmd>lua require('fzf-lua').live_grep()<CR>
+nnoremap <space>* <cmd>lua require('fzf-lua').grep_cword()<CR>
+noremap <space>v <cmd>lua require('fzf-lua').grep_visual()<CR>
+noremap <space>gc <cmd>lua require('fzf-lua').git_commits()<CR>
+noremap <space>gb <cmd>lua require('fzf-lua').git_branches()<CR>
+noremap <space>gs <cmd>lua require('fzf-lua').git_stash()<CR>
+imap <c-l> <plug>(fzf-complete-line)
 
 map <c-t> <c-W><S-t>
 
@@ -471,13 +492,13 @@ nnoremap \gd :Gdiff<CR>
 nnoremap \ge :Gedit<CR>
 nnoremap \gr :Gread<CR>
 nnoremap \gw :Gwrite<CR><CR>
-nnoremap \gl :0Gclog<CR>
-nnoremap \gp :Ggrep<Space>
+nnoremap \glog :0Gclog<CR>
+nnoremap \ggrep :Ggrep<Space>
 nnoremap \gm :Gmove<Space>
 nnoremap \gb :Git branch<Space>
 nnoremap \go :Git checkout<Space>
-nnoremap \gps :Git push<CR>
-nnoremap \gpl :Git pull<CR>
+nnoremap \gp :Git push<CR>
+nnoremap \gl :Git pull<CR>
 " Fugitive Conflict Resolution
 nnoremap \gd :Gvdiffsplit!<CR>
 nnoremap gdh :diffget //2<CR>
@@ -536,8 +557,36 @@ nnoremap <leader>m :MaximizerToggle!<CR>
 " => Asynctasks
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:asyncrun_open = 6
-nnoremap \tl :AsyncTaskList<CR>
-nnoremap \tt :AsyncTask 
+
+function! s:fzf_sink(what)
+	let p1 = stridx(a:what, '<')
+	if p1 >= 0
+		let name = strpart(a:what, 0, p1)
+		let name = substitute(name, '^\s*\(.\{-}\)\s*$', '\1', '')
+		if name != ''
+			exec "AsyncTask ". fnameescape(name)
+		endif
+	endif
+endfunction
+
+function! s:fzf_task()
+	let rows = asynctasks#source(&columns * 48 / 100)
+	let source = []
+	for row in rows
+		let name = row[0]
+		let source += [name . '  ' . row[1] . '  : ' . row[2]]
+	endfor
+	let opts = { 'source': source, 'sink': function('s:fzf_sink'),
+				\ 'options': '+m --nth 1 --inline-info --tac' }
+	if exists('g:fzf_layout')
+		for key in keys(g:fzf_layout)
+			let opts[key] = deepcopy(g:fzf_layout[key])
+		endfor
+	endif
+	call fzf#run(opts)
+endfunction
+
+command! -nargs=0 AsyncTaskFzf call s:fzf_task()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim swoop
@@ -565,7 +614,7 @@ function! s:gitUntracked()
     return map(files, "{'line': v:val, 'path': v:val}")
 endfunction
 
-let g:startify_custom_header = [
+let g:startify_custom_header_ = [
     \'             _nnnn_                      ',
     \'            dGGGGMMb     ,"""""""""""""".',
     \'           @p~qp~~qMb    | Hi abidibo!  |',
@@ -582,6 +631,67 @@ let g:startify_custom_header = [
     \'    _)      \.___.,|     .''',
     \'    \____   )MMMMMM|   .''',
     \'         `-''       `--'' hjm',
+    \]
+
+let g:startify_custom_header = [
+\' ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⠶⠶⠶⠶⠤⠤⠤⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\' ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠔⠊⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠛⠷⣦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\' ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⢶⣾⠋⢉⣉⣉⣛⣛⣍⣽⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠷⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\' ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⠴⠋⢀⡔⠉⠀⠀⣀⣠⣤⣤⣵⣼⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\' ⠀⠀⢀⠶⠒⠋⣹⠟⢉⣀⠤⠖⠛⠉⠀⢀⣠⠴⠚⠉⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢶⣦⡀⠀⠀⠀⠉⠁⠀⠀⠀⠉⠙⠻⣶⣄⠀',
+\' ⠀⡴⠿⠒⠒⡾⠀⢠⠾⠁⠀⣀⡀⠀⣴⡋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠈⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⣇',
+\' ⠀⠀⢠⠞⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⣀⣠⣤⠤⠤⠤⠤⠤⠤⠤⠔⠚⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣾⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡿⠁',
+\' ⠀⣰⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣶⣿⣧⣾⣤⣀⣀⣀⣰⡄⠀⢀⣀⣶⣤⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡟⠁⠀',
+\' ⠐⠋⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⣀⣴⠟⠋⠀⠀⠀',
+\' ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⠟⠋⠉⠉⠛⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⣀⣼⠿⠋⠁⠀⠀⠀⠀⠀',
+\'⠀  ⠀⠀⠀⠀⠀⠀⠀⣾⡿⠁⠀⠀⠀⠀⠀⠀⠈⠋⠙⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⢀⣠⣤⣶⡟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\'⠀⠀⠀  ⠀⠀⣀⣴⠾⣏⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣿⣿⣿⣿⣿⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\' ⠀⠀⠀⣠⠴⠋⠁⠀⠀⣿⣿⣦⣀⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣤⣶⣿⣿⣿⣿⣿⣿⣿⡿⢿⣆⠀⠀⠀⠀⠀⠀⠀⠀',
+\'  ⠀⡼⠃⠀⠀⠀⠀⢰⣿⣿⣿⣿⣿⣶⣤⣤⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⣴⣾⠟⠉⣿⣿⣿⣿⣿⣿⣿⡿⠿⣿⣧⠀⠻⠀⠀⠀⠀⠀⠀⠀⠀',
+\' ⠀⠜⠁⠀⠀⠀⠀⠀⢸⡏⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣿⣶⣿⣿⣿⣿⣿⣿⣿⣏⡁⠉⠋⢁⣠⡾⠿⠛⣿⣿⡇⢹⣿⣿⣶⣌⠙⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\'⠀  ⠀⠀⠀⠀⠀⠀⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠛⠻⢿⣯⡉⠉⠉⣅⣰⣶⠂⢠⣿⡟⢀⣾⣿⣆⠀⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\'⠀⠀⠀  ⠀⠀⠀⠀⠀⠁⠀⠻⠈⢿⣿⣿⣿⣏⠉⠉⠉⠉⠉⠉⢹⣿⣇⠀⠀⠀⠀⠀⠈⠀⠐⠋⠓⠀⠀⣼⣋⣴⡇⠀⠈⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\'⠀⠀⠀⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⠀⠙⠿⣧⡉⠀⠀⠀⠀⠀⠀⠘⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⠋⠛⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\'⠀⠀⠀⠀⠀⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣄⠀⠀⠀⠀⠀⠀⠙⠛⠃⠀⠀⠀⠀⠀⠀⠀⠀⢀⠜⠉⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\'⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⠸⠿⣷⣄⠀⠀⠐⠒⠒⠒⠒⠒⠒⠒⠒⠀⠀⠀⣠⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⢹⠘⣷⣤⡀⠀⠀⠘⠛⠛⠂⠀⠀⠀⣠⡾⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠀⠀⠀⠀⠀⢸⠀⠘⣿⣿⣷⣦⣄⡀⠀⠀⣀⣴⣿⣿⠰⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\' ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⠀⣀⡘⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⢻⡀⠀⢀⣀⣀⣠⣤⣤⣄⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\'⠀  ⠀⠀⠀⠀⠀⠀⢀⡾⠋⠉⠁⠀⠀⠈⠉⠉⢹⠇⠀⠀⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠘⢿⡛⠉⠉⠁⠀⠀⠀⠀⠀⠉⠙⢿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀',
+\'⠀⠀⠀  ⠀⠀⠀⢠⣾⠀⠀⠀⠀⣀⣤⣴⣶⠾⠏⠀⠀⢣⠀⠀⢻⣿⣿⣿⡿⠋⢹⣿⠇⠀⠀⠀⠀⠙⢆⣀⣤⣤⣄⣀⡀⠀⠀⠀⠀⠙⢷⡄⠀⠀⠀⠀⠀⠀⠀',
+\' ⠀⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀⢀⡾⠛⠛⠻⣏⠀⠀⠀⠀⢸⣇⠀⠀⢿⣿⡛⠁⠀⣾⡿⠀⣠⠀⠀⠀⠀⠀⠙⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀⠀⠙⠀⠀⠀⠀⠀⠀⠀',
+\'⠀  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⡼⠁⠀⠀⠀⢹⣆⠀⠀⠀⢸⣿⡄⠀⠈⣿⡇⠀⢠⣿⠇⢰⡏⠀⠀⠀⠀⠀⣰⠇⠀⠀⠉⠉⠛⢿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\'⠀⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⣷⠶⠶⠶⠶⠶⠿⣷⣤⣀⣸⣿⣷⠀⠀⠘⣷⠀⠘⠋⢀⣿⠁⣠⣶⠖⠚⢿⡿⠛⠛⠛⠛⠛⠛⠛⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\'⠀⠀⠀⠀⠀  ⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠙⠃⠀⠉⠛⢿⡆⠀⠀⠸⣆⠀⣠⣾⠏⠸⠋⠁⠀⢀⡾⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\'⠀⠀⠀⠀⠀⠀⠀  ⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⠀⠀⠀⠙⠛⠛⠛⠀⠀⠀⠀⠀⠚⠁⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+\'⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠏⠀⠀⠀',
+\'⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠀⠁⠀⠀⠀⠀⠀⠀⠀    Hi abidibo!⠀⠀⠀⠀⠀⠀⠀  ⠀⠀⠀⠀⠏⠀⠀⠀',
+    \]
+
+
+let g:startify_custom_header__ = [
+\'   ⣿⣿⣿⣿⡿⠛⠛⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠛⠛⠛⢿⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⠁⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠛⠛⠛⠛⠻⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁⠀⠀⠀⠈⣿⣿⣿⣿',
+\'   ⣿⠋⠉⠁⠀⠀⠀⠀⢴⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠻⣿⣿⣿⣿⣿⣿⣿⣿⣦⠀⠀⠀⠀⠈⠉⠻⣿',
+\'   ⣿⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⣿⣿⣿⣿⠟⠁⣰⡆⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣄⡈⠻⣿⣿⣿⣿⡿⠏⠀⠀⠀⠀⠀⠀⠀⠀⣿',
+\'   ⣿⣦⣄⣀⣤⣶⣄⠀⠀⠀⠀⠙⢿⡿⠃⠀⡾⠃⣰⠟⢠⡟⠀⠀⠀⠀⠀⠀⠀⠀⢿⡄⠈⢿⡀⠈⢿⡿⠋⠀⠀⠀⠀⣠⣶⣄⣀⣀⣴⣿',
+\'   ⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⢀⣿⣷⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣾⣷⣶⣾⣿⡄⠀⠀⣠⣾⣿⣿⣿⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⣿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⣿⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⣿⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣼⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⣀⣴⣶⣶⣄⠀⠀⠀⠀⠀⠀⣠⣴⣶⣦⣄⠀⠀⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⢰⣿⣿⣿⣿⣿⣷⡄⠀⠀⢀⣾⣿⣿⣿⣿⣿⣇⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⢸⣿⣿⣿⣿⣿⣿⠇⠀⠀⠘⣿⣿⣿⣿⣿⣿⡿⠀⠀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣀⠀⠻⠿⣿⣿⠿⠋⠀⠀⠀⠀⠘⠿⢿⣿⡿⠿⠃⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣀⠀⠀⠀⠀⠀⠐⢿⣿⠇⠀⠀⠀⠀⠀⣀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢿⡿⠛⠲⠦⣤⣤⣤⣀⣀⣤⣤⣤⠴⠖⠛⣿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⢸⢧⣀⠀⢰⡇⠀⠈⠉⡏⠉⠀⢸⠀⠀⢀⣼⡇⠙⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⣟⠀⠈⠉⣾⠳⠶⠤⣤⣧⠤⠴⢾⡗⠉⠉⠀⢇⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⣿⡿⠋⠉⠙⠻⠛⠁⠀⠀⠀⢀⡏⠑⢶⣤⡟⠀⠀⠀⠀⡇⠀⠀⠀⣷⣠⡴⠖⢻⠀⠀⠀⠀⠈⠻⠟⠋⠉⠙⢿⣿⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣷⠀⠀⠀⠈⠉⠛⠛⠛⠛⠛⠛⠋⠉⠀⠀⠀⣾⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⣿⣧⣀⣀⠀⠀⠀⠀⠐⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⣿⣿⠀⠀⠀⠀⢀⣀⣠⣾⣿⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⣿⣿⣿⣿⡄⠀⠀⠀⠀⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣼⣿⣿⣿⣿⣇⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿',
+\'   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣤⣤⣴⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣤⣤⣤⣤⣴⣶⣿⣿⣿⣿⣿⣿⣿⣿⣦⣤⣤⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿',
     \]
 
 let g:startify_lists = [
