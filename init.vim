@@ -2,13 +2,12 @@ call plug#begin("~/.config/nvim/plugged")
   " =============================================================
   " Plugin Section
   " =============================================================
-  "
+
   " Plug 'embear/vim-localvimrc'
-  Plug 'joshdick/onedark.vim'
   Plug 'MarcWeber/vim-addon-local-vimrc'
 
   " theme
-  " Plug 'morhetz/gruvbox'
+  Plug 'morhetz/gruvbox'
   Plug 'joshdick/onedark.vim'
   Plug 'mhinz/vim-startify'
 
@@ -18,6 +17,7 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'ryanoasis/vim-devicons'
 
   " Tasks
+  Plug 'preservim/vimux'
   Plug 'skywind3000/asynctasks.vim'
   Plug 'skywind3000/asyncrun.vim'
 
@@ -29,7 +29,8 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'kyazdani42/nvim-web-devicons'
 
   " HTTP request
-  Plug 'aquach/vim-http-client'
+  Plug 'rest-nvim/rest.nvim'
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
   " motion
   Plug 'justinmk/vim-sneak'
@@ -80,7 +81,7 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'tpope/vim-surround'
 
   " tagbar
-  Plug 'majutsushi/tagbar'
+  Plug 'preservim/tagbar'
 
   " polyglot
   Plug 'sheerun/vim-polyglot'
@@ -192,7 +193,7 @@ set undofile
 " coding
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set numbers
-set number
+set relativenumber number
 
 " Use spaces instead of tabs
 set expandtab
@@ -265,7 +266,9 @@ nnoremap <leader><c-t> :call OpenTerminal()<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " autocmd vimenter * ++nested colorscheme gruvbox
 syntax on
-colorscheme onedark
+colorscheme gruvbox
+let g:gruvbox_italic=1
+" colorscheme onedark
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -303,16 +306,22 @@ autocmd VimEnter *
 
 nnoremap <space>f <cmd>lua require('fzf-lua').files()<CR>
 nnoremap <space>b <cmd>lua require('fzf-lua').buffers()<CR>
-nnoremap <space>c <cmd>lua require('fzf-lua').lsp_definitions()<CR>
-nnoremap <space>l <cmd>lua require('fzf-lua').git_bcommits()<CR>
+nnoremap <space>lb <cmd>lua require('fzf-lua').lines()<CR>
+nnoremap <space>ll <cmd>lua require('fzf-lua').blines()<CR>
+nnoremap <space>c <cmd>lua require('fzf-lua').git_bcommits()<CR>
 nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 nnoremap <silent><nowait> <space>t  :<C-u>CocList tasks<cr>
-nnoremap <space>/ <cmd>lua require('fzf-lua').live_grep()<CR>
+nnoremap <space>, <cmd>lua require('fzf-lua').live_grep()<CR>
+nnoremap <space>/ <cmd>lua require('fzf-lua').grep()<CR>
 nnoremap <space>* <cmd>lua require('fzf-lua').grep_cword()<CR>
 noremap <space>v <cmd>lua require('fzf-lua').grep_visual()<CR>
+noremap <space>r <cmd>lua require('fzf-lua').grep_last()<CR>
 noremap <space>gc <cmd>lua require('fzf-lua').git_commits()<CR>
 noremap <space>gb <cmd>lua require('fzf-lua').git_branches()<CR>
-noremap <space>gs <cmd>lua require('fzf-lua').git_stash()<CR>
+noremap <space>gs <cmd>lua require('fzf-lua').git_status()<CR>
+noremap <space>vc <cmd>lua require('fzf-lua').commands()<CR>
+noremap <space>vm <cmd>lua require('fzf-lua').marks()<CR>
+nnoremap <space>va <cmd>lua require('fzf-lua').builtin()<CR>
 imap <c-l> <plug>(fzf-complete-line)
 
 map <c-t> <c-W><S-t>
@@ -320,7 +329,7 @@ map <c-t> <c-W><S-t>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " coc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-highlight CocMenuSel ctermfg=DarkRed  guifg=#330000
+" highlight CocMenuSel ctermfg=DarkRed  guifg=#330000
 au FileType python let b:coc_root_patterns = ['.git', '.env', 'venv', '.venv', 'setup.cfg', 'setup.py', 'pyrightconfig.json', '.vimrc']
 
 " Use tab for trigger completion with characters ahead and navigate.
@@ -341,9 +350,6 @@ inoremap <silent><expr> <TAB>
     \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 inoremap <silent><expr> <c-space> coc#refresh()
-
-hi CocSearch ctermfg=12 guifg=#18A3FF
-hi CocMenuSel ctermbg=109 guibg=#13354A
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -408,6 +414,7 @@ augroup end
 " Example: `<leader>aap` for current paragraph
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a* <Plug>(coc-codeaction-cursor)
 
 " Remap keys for applying codeAction to the current buffer.
 nmap <leader>ac  <Plug>(coc-codeaction)
@@ -598,6 +605,11 @@ nmap <Leader>ml :call SwoopMulti()<CR>
 vmap <Leader>ml :call SwoopMultiSelection()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Rest nvim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <silent> <leader>rr <Plug>RestNvim
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Startify
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " returns all modified files of the current git repo
@@ -659,14 +671,9 @@ let g:startify_custom_header = [
 \' ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⠀⣀⡘⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⢻⡀⠀⢀⣀⣀⣠⣤⣤⣄⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
 \'⠀  ⠀⠀⠀⠀⠀⠀⢀⡾⠋⠉⠁⠀⠀⠈⠉⠉⢹⠇⠀⠀⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠘⢿⡛⠉⠉⠁⠀⠀⠀⠀⠀⠉⠙⢿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀',
 \'⠀⠀⠀  ⠀⠀⠀⢠⣾⠀⠀⠀⠀⣀⣤⣴⣶⠾⠏⠀⠀⢣⠀⠀⢻⣿⣿⣿⡿⠋⢹⣿⠇⠀⠀⠀⠀⠙⢆⣀⣤⣤⣄⣀⡀⠀⠀⠀⠀⠙⢷⡄⠀⠀⠀⠀⠀⠀⠀',
-\' ⠀⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀⢀⡾⠛⠛⠻⣏⠀⠀⠀⠀⢸⣇⠀⠀⢿⣿⡛⠁⠀⣾⡿⠀⣠⠀⠀⠀⠀⠀⠙⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀⠀⠙⠀⠀⠀⠀⠀⠀⠀',
-\'⠀  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⡼⠁⠀⠀⠀⢹⣆⠀⠀⠀⢸⣿⡄⠀⠈⣿⡇⠀⢠⣿⠇⢰⡏⠀⠀⠀⠀⠀⣰⠇⠀⠀⠉⠉⠛⢿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-\'⠀⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⣷⠶⠶⠶⠶⠶⠿⣷⣤⣀⣸⣿⣷⠀⠀⠘⣷⠀⠘⠋⢀⣿⠁⣠⣶⠖⠚⢿⡿⠛⠛⠛⠛⠛⠛⠛⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-\'⠀⠀⠀⠀⠀  ⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠙⠃⠀⠉⠛⢿⡆⠀⠀⠸⣆⠀⣠⣾⠏⠸⠋⠁⠀⢀⡾⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-\'⠀⠀⠀⠀⠀⠀⠀  ⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⠀⠀⠀⠙⠛⠛⠛⠀⠀⠀⠀⠀⠚⠁⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-\'⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠏⠀⠀⠀',
-\'⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠀⠁⠀⠀⠀⠀⠀⠀⠀    Hi abidibo!⠀⠀⠀⠀⠀⠀⠀  ⠀⠀⠀⠀⠏⠀⠀⠀',
-    \]
+\' ---------------------------------------------------------- ',
+\'⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠀ ⠀⠀⠀⠀⠀⠀⠀    Hi abidibo!⠀⠀⠀⠀⠀⠀⠀  ⠀⠀⠀⠀          ⠀⠀',
+\]
 
 
 let g:startify_custom_header__ = [
@@ -694,13 +701,18 @@ let g:startify_custom_header__ = [
 \'   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣤⣤⣴⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣤⣤⣤⣤⣴⣶⣿⣿⣿⣿⣿⣿⣿⣿⣦⣤⣤⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿',
     \]
 
+
+let g:startify_files_number = 3
 let g:startify_lists = [
         \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
         \ { 'type': 'sessions',  'header': ['   Sessions']       },
+        \ { 'type': function('s:gitModified'),  'header': ['   Git modified']},
+        \ { 'type': function('s:gitUntracked'), 'header': ['   Git untracked']},
         \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-        \ { 'type': function('s:gitModified'),  'header': ['   git modified']},
-        \ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
         \ { 'type': 'commands',  'header': ['   Commands']       },
         \ ]
 
-nnoremap <leader>s :Startify<CR>
+let g:startify_bookmarks = [
+    \ $HOME . "/.config/nvim/init.vim", $HOME . "/.bashrc",
+    \ $HOME . "/.tmux.conf"
+    \ ]
