@@ -12,9 +12,8 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'mhinz/vim-startify'
 
   " sidebar nav
-  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-  Plug 'Xuyuanp/nerdtree-git-plugin'
-  Plug 'ryanoasis/vim-devicons'
+  " Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+  Plug 'kyazdani42/nvim-tree.lua'
 
   " Tasks
   Plug 'preservim/vimux'
@@ -33,7 +32,7 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
   " motion
-  Plug 'justinmk/vim-sneak'
+  Plug 'ggandor/leap.nvim'
 
   " code completion
   " install django-stubs package for Django!
@@ -116,7 +115,7 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'pelodelfuego/vim-swoop'
 
   " Debugger
-  " Plug 'puremourning/vimspector'
+  Plug 'puremourning/vimspector'
 
 call plug#end()
 
@@ -222,9 +221,9 @@ autocmd FileType html,htmldjango imap <leader>.c </<C-X><C-O><tab><C-F>
 nmap <leader>src :so $MYVIMRC<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Sneak
+" Leap
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:sneak#label = 1
+lua require'leap'.set_default_keymaps()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " python
@@ -272,14 +271,37 @@ let g:gruvbox_italic=1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" nerdtree
+" nerdtree | nvim-tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <C-f> :NERDTreeToggle<CR>
-let NERDTreeIgnore = ['\.pyc$']
+" map <C-f> :NERDTreeToggle<CR>
+" let NERDTreeIgnore = ['\.pyc$']
+" autocmd VimEnter *
+"             \   if !argc()
+"             \ |   Startify
+"             \ |   NERDTree
+"             \ |   wincmd w
+
+lua require'nvim-tree'.setup {
+            \ open_on_setup = true,
+            \ open_on_setup_file = true,
+            \ filters = { custom = { ".pyc$" } },
+            \ diagnostics = { enable = true, show_on_dirs = true }
+      \ }
+
+function! s:find_file_no_focus()
+  lua require "nvim-tree".find_file()
+  wincmd p
+endfunction
+
+map <C-f> :NvimTreeToggle<CR>
+nnoremap <silent> <C-b> :call <SID>find_file_no_focus()<CR>
+
 autocmd VimEnter *
             \   if !argc()
             \ |   Startify
-            \ |   NERDTree
+            \ |   NvimTreeToggle
+autocmd VimEnter *
+            \   if !argc()
             \ |   wincmd w
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -515,7 +537,7 @@ nnoremap gdl :diffget //3<CR>
 " Gundo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:gundo_prefer_python3 = 1
-nnoremap <F5> :GundoToggle<CR>
+nnoremap <F2> :GundoToggle<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => tagbar
@@ -544,11 +566,6 @@ set list lcs=tab:\¦\
 " => Emmet
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:user_emmet_leader_key='<C-Z>'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Vimspector
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let g:vimspector_enable_mappings='HUMAN'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Tabulous
@@ -608,6 +625,19 @@ vmap <Leader>ml :call SwoopMultiSelection()<CR>
 " => Rest nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <silent> <leader>rr <Plug>RestNvim
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Vimspector
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:vimspector_base_dir='/home/abidibo/.config/nvim/plugged/vimspector'
+let g:vimspector_enable_mappings = 'HUMAN'
+nnoremap <F5> <Plug>VimspectorContinue
+nnoremap <F3> <Plug>VimspectorStop
+nnoremap <F9> <Plug>VimspectorToggleBreakpoint
+nnoremap <leader><F8> <Plug>VimspectorRunToCursor
+nnoremap <leader>so <Plug>VimspectorStepOver
+nnoremap <leader>si <Plug>VimspectorStepInto
+nnoremap <leader>su <Plug>VimspectorStepOut
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Startify
