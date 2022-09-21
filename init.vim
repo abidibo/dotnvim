@@ -744,5 +744,5 @@ let g:startify_lists = [
 
 let g:startify_bookmarks = [
     \ $HOME . "/.config/nvim/init.vim", $HOME . "/.bashrc",
-    \ $HOME . "/.tmux.conf"
+    \ $HOME . "/Applications/Bin/nvim-docs.sh", $HOME . "/.tmux.conf"
     \ ]
