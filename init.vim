@@ -34,6 +34,9 @@ call plug#begin("~/.config/nvim/plugged")
   " motion
   Plug 'ggandor/leap.nvim'
 
+  " repeat
+  Plug 'tpope/vim-repeat'
+
   " code completion
   " install django-stubs package for Django!
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -54,11 +57,10 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'webdevel/tabulous'
   Plug 'szw/vim-maximizer'
   Plug 'christoomey/vim-tmux-navigator'
-  " Plug 'kyazdani42/nvim-web-devicons'
-  " Plug 'romgrk/barbar.nvim'
 
-  " paste
-  " Plug 'vim-scripts/YankRing.vim'
+  " clipboard
+  " Plug 'AckslD/nvim-neoclip.lua'
+  Plug 'junegunn/vim-peekaboo'
 
   " undo
   Plug 'sjl/gundo.vim'
@@ -85,17 +87,14 @@ call plug#begin("~/.config/nvim/plugged")
   " polyglot
   Plug 'sheerun/vim-polyglot'
 
-  " jsdoc
-  Plug 'heavenshell/vim-jsdoc'
-
   " css
   Plug 'ap/vim-css-color'
 
   " python
   Plug 'mgedmin/python-imports.vim'
 
-  " Install doq
-  Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
+  " Doge
+  Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 
   " Markdown preview
   Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
@@ -234,15 +233,13 @@ lua require'leap'.set_default_keymaps()
 autocmd FileType python nnoremap <leader>b Oimport pdb; pdb.set_trace() # BREAKPOINT<esc>
 autocmd FileType javascript nnoremap <leader>b Odebugger // eslint-disable-line<esc>
 autocmd FileType javascript nnoremap <leader>pt oimport PropTypes from 'prop-types'<esc>
-autocmd FileType javascript nnoremap <leader>dl A // eslint-disable-line<esc>
+autocmd FileType javascript nnoremap <leader>edl A // eslint-disable-line<esc>
 autocmd FileType javascript nnoremap <leader>log oconsole.log('') // eslint-disable-line<esc>bbbbbbbla
 " django template
 autocmd FileType html,htmldjango imap <leader>.v {<esc>a{<space><space><esc>ha
 autocmd FileType html,htmldjango imap <leader>.t {%<space><space>%}<esc>hhi
 autocmd FileType html,htmldjango imap <leader>.d {#<space><space>#}<esc>hhi
 
-nmap <silent> <C-_> <Plug>(pydocstring)
-let g:pydocstring_doq_path='/home/abidibo/.local/bin/doq'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " terminal
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -269,6 +266,10 @@ colorscheme gruvbox
 let g:gruvbox_italic=1
 " colorscheme onedark
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Airline
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" let g:airline_powerline_fonts = 1 " causes problems with custom terminal cell spacing
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " nerdtree | nvim-tree
@@ -281,9 +282,14 @@ let g:gruvbox_italic=1
 "             \ |   NERDTree
 "             \ |   wincmd w
 
+" lua require'nvim-tree'.setup {
+"             \ open_on_setup = true,
+"             \ open_on_setup_file = true,
+"             \ filters = { custom = { ".pyc$" } },
+"             \ diagnostics = { enable = true, show_on_dirs = true }
+"       \ }
+
 lua require'nvim-tree'.setup {
-            \ open_on_setup = true,
-            \ open_on_setup_file = true,
             \ filters = { custom = { ".pyc$" } },
             \ diagnostics = { enable = true, show_on_dirs = true }
       \ }
@@ -328,8 +334,8 @@ autocmd VimEnter *
 
 nnoremap <space>f <cmd>lua require('fzf-lua').files()<CR>
 nnoremap <space>b <cmd>lua require('fzf-lua').buffers()<CR>
-nnoremap <space>lb <cmd>lua require('fzf-lua').lines()<CR>
-nnoremap <space>ll <cmd>lua require('fzf-lua').blines()<CR>
+nnoremap <space>ll <cmd>lua require('fzf-lua').lines()<CR>
+nnoremap <space>lb <cmd>lua require('fzf-lua').blines()<CR>
 nnoremap <space>c <cmd>lua require('fzf-lua').git_bcommits()<CR>
 nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 nnoremap <silent><nowait> <space>t  :<C-u>CocList tasks<cr>
@@ -344,8 +350,9 @@ noremap <space>gs <cmd>lua require('fzf-lua').git_status()<CR>
 noremap <space>vc <cmd>lua require('fzf-lua').commands()<CR>
 noremap <space>vm <cmd>lua require('fzf-lua').marks()<CR>
 nnoremap <space>va <cmd>lua require('fzf-lua').builtin()<CR>
-imap <c-l> <plug>(fzf-complete-line)
+" nnoremap <space>y <cmd>lua require('neoclip.fzf')()<CR>
 
+" move buffer in new tab
 map <c-t> <c-W><S-t>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -496,28 +503,21 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " Translations
-nmap <Leader>t <Plug>(coc-translator-p)
-vmap <Leader>t <Plug>(coc-translator-pv)
+nmap <Leader>tt <Plug>(coc-translator-p)
+vmap <Leader>tt <Plug>(coc-translator-pv)
 " replace
 nmap <Leader>tr <Plug>(coc-translator-r)
 vmap <Leader>tr <Plug>(coc-translator-rv)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" YankRing
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <space>y :YRShow<CR>
-let g:yankring_clipboard_monitor=0
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Fugitive
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fugitive git bindings
-nnoremap \ga :Git add %:p<CR><CR>
+nnoremap \ga :Git add %<CR>
 nnoremap \gs :Git<CR>
 nnoremap \gc :Git commit -v -q<CR>
 nnoremap \gcf :Gcommit %<CR>
 nnoremap \gt :Gcommit -v -q %:p<CR>
-nnoremap \gd :Gdiff<CR>
 nnoremap \ge :Gedit<CR>
 nnoremap \gr :Gread<CR>
 nnoremap \gw :Gwrite<CR><CR>
@@ -542,15 +542,13 @@ nnoremap <F2> :GundoToggle<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => tagbar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <F8> :TagbarToggle<CR>
+nnoremap <leader>8 :TagbarToggle<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => jsdoc
+" => Doge
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:jsdoc_lehre_path = '/home/abidibo/.nvm/versions/node/v12.11.0/bin/lehre'
-let g:jsdoc_allow_input_prompt=1
-let g:jsdoc_input_description=1
-let g:jsdoc_enable_es6=1
+let g:doge_mapping_comment_jump_forward='<C-j>'
+let g:doge_mapping_comment_jump_backward='<C-k>'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Utilsnip
@@ -625,6 +623,14 @@ vmap <Leader>ml :call SwoopMultiSelection()<CR>
 " => Rest nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <silent> <leader>rr <Plug>RestNvim
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Clipboard
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" lua require'neoclip'.setup{
+"             \ requires = { 'ibhagwan/fzf-lua' },
+"             \ continuous_sync = true,
+"       \ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vimspector
