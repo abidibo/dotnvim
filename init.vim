@@ -40,7 +40,7 @@ call plug#begin("~/.config/nvim/plugged")
   " code completion
   " install django-stubs package for Django!
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  let g:coc_global_extensions = ['coc-tsserver', 'coc-tag', 'coc-syntax', 'coc-pairs', 'coc-css', 'coc-html', 'coc-json', 'coc-translator', 'coc-sh', 'coc-styled-components', 'coc-react-refactor', 'coc-ultisnips', 'coc-marketplace', 'coc-pyright', 'coc-eslint', 'coc-prettier', 'coc-highlight', 'coc-tasks']
+  let g:coc_global_extensions = ['coc-tsserver', 'coc-tag', 'coc-syntax', 'coc-pairs', 'coc-css', 'coc-html', 'coc-json', 'coc-translator', 'coc-sh', 'coc-styled-components', 'coc-react-refactor', 'coc-ultisnips', 'coc-marketplace', 'coc-pyright', 'coc-eslint', 'coc-prettier', 'coc-highlight', 'coc-tasks', 'coc-jsref', 'coc-htmldjango']
   Plug 'SirVer/ultisnips'
   Plug 'mlaursen/vim-react-snippets'
   Plug 'honza/vim-snippets'
@@ -59,7 +59,7 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'christoomey/vim-tmux-navigator'
 
   " clipboard
-  " Plug 'AckslD/nvim-neoclip.lua'
+  Plug 'ibhagwan/nvim-neoclip.lua'
   Plug 'junegunn/vim-peekaboo'
 
   " undo
@@ -272,16 +272,8 @@ let g:gruvbox_italic=1
 " let g:airline_powerline_fonts = 1 " causes problems with custom terminal cell spacing
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" nerdtree | nvim-tree
+" nvim-tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" map <C-f> :NERDTreeToggle<CR>
-" let NERDTreeIgnore = ['\.pyc$']
-" autocmd VimEnter *
-"             \   if !argc()
-"             \ |   Startify
-"             \ |   NERDTree
-"             \ |   wincmd w
-
 " lua require'nvim-tree'.setup {
 "             \ open_on_setup = true,
 "             \ open_on_setup_file = true,
@@ -348,9 +340,10 @@ noremap <space>gc <cmd>lua require('fzf-lua').git_commits()<CR>
 noremap <space>gb <cmd>lua require('fzf-lua').git_branches()<CR>
 noremap <space>gs <cmd>lua require('fzf-lua').git_status()<CR>
 noremap <space>vc <cmd>lua require('fzf-lua').commands()<CR>
-noremap <space>vm <cmd>lua require('fzf-lua').marks()<CR>
+noremap <space>m <cmd>lua require('fzf-lua').marks()<CR>
 nnoremap <space>va <cmd>lua require('fzf-lua').builtin()<CR>
-" nnoremap <space>y <cmd>lua require('neoclip.fzf')()<CR>
+nnoremap <space>y <cmd>lua require('neoclip.fzf')()<CR>
+inoremap <C-space>y <cmd>lua require('neoclip.fzf')()<CR>
 
 " move buffer in new tab
 map <c-t> <c-W><S-t>
@@ -444,6 +437,7 @@ augroup end
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a* <Plug>(coc-codeaction-cursor)
+nmap <silent> ga <Plug>(coc-codeaction-line)
 
 " Remap keys for applying codeAction to the current buffer.
 nmap <leader>ac  <Plug>(coc-codeaction)
@@ -627,10 +621,10 @@ nmap <silent> <leader>rr <Plug>RestNvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Clipboard
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" lua require'neoclip'.setup{
-"             \ requires = { 'ibhagwan/fzf-lua' },
-"             \ continuous_sync = true,
-"       \ }
+lua require'neoclip'.setup{
+            \ requires = { 'ibhagwan/fzf-lua' },
+            \ continuous_sync = true,
+      \ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vimspector

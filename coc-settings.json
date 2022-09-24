@@ -2,6 +2,7 @@
   "coc.preferences.jumpCommand": "vsplit",
   "diagnostic.checkCurrentLine": true,
   "diagnostic.virtualTextCurrentLineOnly": false,
+  "diagnostic.virtualTextLevel": "warning",
   "diagnostic.virtualText": true,
   "python.formatting.provider": "black",
   "python.linting.enabled": false,
