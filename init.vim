@@ -119,6 +119,9 @@ call plug#begin("~/.config/nvim/plugged")
   " Debugger
   Plug 'puremourning/vimspector'
 
+  " Misc
+  Plug 'MilesCranmer/gso'
+
 call plug#end()
 
 " =============================================================
