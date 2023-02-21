@@ -22,8 +22,9 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'skywind3000/asyncrun.vim'
 
   " file searching
-  " Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
-  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+  " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  " Plug 'junegunn/fzf.vim'
+  Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
   " optional for icon support
   Plug 'kyazdani42/nvim-web-devicons'
 
@@ -312,53 +313,48 @@ nnoremap <silent> <C-m> :call <SID>find_file_no_focus()<CR>
 "             \ |   wincmd w
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" fzf | Telescope
+" fzf
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""let g:fzf_launcher='gnome-terminal --disable-factory -x bash -ic %s'
+""let g:fzf_height='40%'
+"let $FZF_DEFAULT_COMMAND = 'ag --ignore "node_modules" --ignore ".virtualenv" -l -g ""'
+"" let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
+"map <space>f :Files<CR>
+"map <space>b :Buffers<CR>
+"map <space>g :GitFiles<CR>
+"map <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+"map <space>c :Commits<CR>
+"map <space>t :AsyncTaskFzf<CR>
+"map <space>/ :Ag<space>
+"imap <c-l> <plug>(fzf-complete-line)
+"imap <C-x><C-f> <plug>(fzf-complete-file-ag)
+"let g:fzf_action = {
+"  \ 'ctrl-t': 'tab split',
+"  \ 'ctrl-s': 'split',
+"  \ 'ctrl-v': 'vsplit'
+"  \}
 
-lua require'telescope'.setup{
-    \ pickers = {
-        \ current_buffer_fuzzy_find = { sorting_strategy = 'ascending' }
-    \ }
-\ }
-
-nnoremap <space>f <cmd>Telescope find_files<cr>
-nnoremap <space>, <cmd>Telescope live_grep<cr>
-nnoremap <space>h <cmd>Telescope help_tags<cr>
-nnoremap <space>gf <cmd>Telescope git_files<cr>
-nnoremap <space>* <cmd>Telescope grep_string<cr>
-nnoremap <space>vb <cmd>Telescope buffers<cr>
-noremap <space>vc <cmd>Telescope commands<cr>
-noremap <space>vs <cmd>Telescope search_history<cr>
-noremap <space>vq <cmd>Telescope quickfix<cr>
-noremap <space>m <cmd>Telescope marks<cr>
-" noremap <space>y <cmd>Telescope registers<cr>
-noremap <space>y <cmd>Telescope neoclip a<cr>
-noremap <space>vs <cmd>Telescope spell_suggest<cr>
-noremap <space>b <cmd>Telescope current_buffer_fuzzy_find<cr>
-" noremap <space>bt <cmd>Telescope current_buffer_tags<cr>
-noremap <space>r <cmd>Telescope resume<cr>
-noremap <space>gc <cmd>Telescope git_commits<cr>
-noremap <space>gx <cmd>Telescope git_bcommits<cr>
-noremap <space>gb <cmd>Telescope git_branches<cr>
-noremap <space>gs <cmd>Telescope git_status<cr>
-noremap <space>gt <cmd>Telescope git_stash<cr>
-" noremap <space>ft <cmd>Telescope treesitter<cr> " slows down finder
-noremap <space>va <cmd>Telescope builtin<cr>
+nnoremap <space>f <cmd>lua require('fzf-lua').files()<CR>
+nnoremap <space>b <cmd>lua require('fzf-lua').buffers()<CR>
+nnoremap <space>ll <cmd>lua require('fzf-lua').lines()<CR>
+nnoremap <space>lb <cmd>lua require('fzf-lua').blines()<CR>
+nnoremap <space>c <cmd>lua require('fzf-lua').git_bcommits()<CR>
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 nnoremap <silent><nowait> <space>t  :<C-u>CocList tasks<cr>
-
-" nnoremap <space>ll <cmd>lua require('fzf-lua').lines()<CR>
-" nnoremap <space>lb <cmd>lua require('fzf-lua').blines()<CR>
-" nnoremap <space>c <cmd>lua require('fzf-lua').git_bcommits()<CR>
-" nnoremap <space>/ <cmd>lua require('fzf-lua').grep()<CR>
-" noremap <space>v <cmd>lua require('fzf-lua').grep_visual()<CR>
-" noremap <space>r <cmd>lua require('fzf-lua').grep_last()<CR>
-" noremap <space>gc <cmd>lua require('fzf-lua').git_commits()<CR>
-" noremap <space>gb <cmd>lua require('fzf-lua').git_branches()<CR>
-" noremap <space>gs <cmd>lua require('fzf-lua').git_status()<CR>
-" noremap <space>gh <cmd>lua require('fzf-lua').git_stash()<CR>
-" nnoremap <space>va <cmd>lua require('fzf-lua').builtin()<CR>
-" nnoremap <space>y <cmd>lua require('neoclip.fzf')()<CR>
-" inoremap <C-space>y <cmd>lua require('neoclip.fzf')()<CR>
+nnoremap <space>, <cmd>lua require('fzf-lua').live_grep()<CR>
+nnoremap <space>/ <cmd>lua require('fzf-lua').grep()<CR>
+nnoremap <space>* <cmd>lua require('fzf-lua').grep_cword()<CR>
+noremap <space>v <cmd>lua require('fzf-lua').grep_visual()<CR>
+noremap <space>r <cmd>lua require('fzf-lua').grep_last()<CR>
+noremap <space>gc <cmd>lua require('fzf-lua').git_commits()<CR>
+noremap <space>gb <cmd>lua require('fzf-lua').git_branches()<CR>
+noremap <space>gs <cmd>lua require('fzf-lua').git_status()<CR>
+noremap <space>gh <cmd>lua require('fzf-lua').git_stash()<CR>
+noremap <space>vc <cmd>lua require('fzf-lua').commands()<CR>
+noremap <space>m <cmd>lua require('fzf-lua').marks()<CR>
+nnoremap <space>va <cmd>lua require('fzf-lua').builtin()<CR>
+nnoremap <space>y <cmd>lua require('neoclip.fzf')()<CR>
+inoremap <C-space>y <cmd>lua require('neoclip.fzf')()<CR>
 
 " move buffer in new tab
 map <c-t> <c-W><S-t>
@@ -590,35 +586,35 @@ nnoremap <leader>m :MaximizerToggle!<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:asyncrun_open = 6
 
-" function! s:fzf_sink(what)
-" 	let p1 = stridx(a:what, '<')
-" 	if p1 >= 0
-" 		let name = strpart(a:what, 0, p1)
-" 		let name = substitute(name, '^\s*\(.\{-}\)\s*$', '\1', '')
-" 		if name != ''
-" 			exec "AsyncTask ". fnameescape(name)
-" 		endif
-" 	endif
-" endfunction
+function! s:fzf_sink(what)
+	let p1 = stridx(a:what, '<')
+	if p1 >= 0
+		let name = strpart(a:what, 0, p1)
+		let name = substitute(name, '^\s*\(.\{-}\)\s*$', '\1', '')
+		if name != ''
+			exec "AsyncTask ". fnameescape(name)
+		endif
+	endif
+endfunction
 
-" function! s:fzf_task()
-" 	let rows = asynctasks#source(&columns * 48 / 100)
-" 	let source = []
-" 	for row in rows
-" 		let name = row[0]
-" 		let source += [name . '  ' . row[1] . '  : ' . row[2]]
-" 	endfor
-" 	let opts = { 'source': source, 'sink': function('s:fzf_sink'),
-" 				\ 'options': '+m --nth 1 --inline-info --tac' }
-" 	if exists('g:fzf_layout')
-" 		for key in keys(g:fzf_layout)
-" 			let opts[key] = deepcopy(g:fzf_layout[key])
-" 		endfor
-" 	endif
-" 	call fzf#run(opts)
-" endfunction
+function! s:fzf_task()
+	let rows = asynctasks#source(&columns * 48 / 100)
+	let source = []
+	for row in rows
+		let name = row[0]
+		let source += [name . '  ' . row[1] . '  : ' . row[2]]
+	endfor
+	let opts = { 'source': source, 'sink': function('s:fzf_sink'),
+				\ 'options': '+m --nth 1 --inline-info --tac' }
+	if exists('g:fzf_layout')
+		for key in keys(g:fzf_layout)
+			let opts[key] = deepcopy(g:fzf_layout[key])
+		endfor
+	endif
+	call fzf#run(opts)
+endfunction
 
-" command! -nargs=0 AsyncTaskFzf call s:fzf_task()
+command! -nargs=0 AsyncTaskFzf call s:fzf_task()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim swoop
@@ -655,6 +651,7 @@ let g:floaterm_autoclose=1
 " Clipboard
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua require'neoclip'.setup{
+            \ requires = { 'ibhagwan/fzf-lua' },
             \ continuous_sync = true,
       \ }
 
