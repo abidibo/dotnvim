@@ -22,8 +22,8 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'skywind3000/asyncrun.vim'
 
   " file searching
-  " Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
-  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+  Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
+  " Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
   " optional for icon support
   Plug 'kyazdani42/nvim-web-devicons'
 
@@ -318,50 +318,57 @@ nnoremap <silent> <C-m> :call <SID>find_file_no_focus()<CR>
 " fzf | Telescope
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-lua require'telescope'.setup{
-    \ pickers = {
-        \ current_buffer_fuzzy_find = { sorting_strategy = 'ascending' }
-    \ }
-\ }
+" lua require'telescope'.setup{
+"     \ pickers = {
+"         \ current_buffer_fuzzy_find = { sorting_strategy = 'ascending' }
+"     \ }
+" \ }
 
-nnoremap <space>f <cmd>Telescope find_files<cr>
-nnoremap <space>, <cmd>Telescope live_grep<cr>
-nnoremap <space>h <cmd>Telescope help_tags<cr>
-nnoremap <space>gf <cmd>Telescope git_files<cr>
-nnoremap <space>* <cmd>Telescope grep_string<cr>
-nnoremap <space>vb <cmd>Telescope buffers<cr>
-noremap <space>vc <cmd>Telescope commands<cr>
-noremap <space>vs <cmd>Telescope search_history<cr>
-noremap <space>vq <cmd>Telescope quickfix<cr>
-noremap <space>m <cmd>Telescope marks<cr>
-" noremap <space>y <cmd>Telescope registers<cr>
-noremap <space>y <cmd>Telescope neoclip a<cr>
-noremap <space>vs <cmd>Telescope spell_suggest<cr>
-noremap <space>b <cmd>Telescope current_buffer_fuzzy_find<cr>
-" noremap <space>bt <cmd>Telescope current_buffer_tags<cr>
-noremap <space>r <cmd>Telescope resume<cr>
-noremap <space>gc <cmd>Telescope git_commits<cr>
-noremap <space>gx <cmd>Telescope git_bcommits<cr>
-noremap <space>gb <cmd>Telescope git_branches<cr>
-noremap <space>gs <cmd>Telescope git_status<cr>
-noremap <space>gt <cmd>Telescope git_stash<cr>
-" noremap <space>ft <cmd>Telescope treesitter<cr> " slows down finder
-noremap <space>va <cmd>Telescope builtin<cr>
+" nnoremap <space>f <cmd>Telescope find_files<cr>
+" nnoremap <space>, <cmd>Telescope live_grep<cr>
+" nnoremap <space>h <cmd>Telescope help_tags<cr>
+" nnoremap <space>gf <cmd>Telescope git_files<cr>
+" nnoremap <space>* <cmd>Telescope grep_string<cr>
+" nnoremap <space>vb <cmd>Telescope buffers<cr>
+" noremap <space>vc <cmd>Telescope commands<cr>
+" noremap <space>vs <cmd>Telescope search_history<cr>
+" noremap <space>vq <cmd>Telescope quickfix<cr>
+" noremap <space>m <cmd>Telescope marks<cr>
+" " noremap <space>y <cmd>Telescope registers<cr>
+" noremap <space>y <cmd>Telescope neoclip a<cr>
+" " noremap <space>vs <cmd>Telescope spell_suggest<cr>
+" noremap <space>b <cmd>Telescope current_buffer_fuzzy_find<cr>
+" " noremap <space>bt <cmd>Telescope current_buffer_tags<cr>
+" noremap <space>r <cmd>Telescope resume<cr>
+" noremap <space>gc <cmd>Telescope git_commits<cr>
+" noremap <space>gx <cmd>Telescope git_bcommits<cr>
+" noremap <space>gb <cmd>Telescope git_branches<cr>
+" noremap <space>gs <cmd>Telescope git_status<cr>
+" noremap <space>gt <cmd>Telescope git_stash<cr>
+" noremap <space>va <cmd>Telescope builtin<cr>
+" nnoremap <silent><nowait> <space>t  :<C-u>CocList tasks<cr>
+
+nnoremap <space>f <cmd>lua require('fzf-lua').files()<CR>
+nnoremap <space>b <cmd>lua require('fzf-lua').buffers()<CR>
+nnoremap <space>ll <cmd>lua require('fzf-lua').lines()<CR>
+nnoremap <space>lb <cmd>lua require('fzf-lua').blines()<CR>
+nnoremap <space>c <cmd>lua require('fzf-lua').git_bcommits()<CR>
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 nnoremap <silent><nowait> <space>t  :<C-u>CocList tasks<cr>
-
-" nnoremap <space>ll <cmd>lua require('fzf-lua').lines()<CR>
-" nnoremap <space>lb <cmd>lua require('fzf-lua').blines()<CR>
-" nnoremap <space>c <cmd>lua require('fzf-lua').git_bcommits()<CR>
-" nnoremap <space>/ <cmd>lua require('fzf-lua').grep()<CR>
-" noremap <space>v <cmd>lua require('fzf-lua').grep_visual()<CR>
-" noremap <space>r <cmd>lua require('fzf-lua').grep_last()<CR>
-" noremap <space>gc <cmd>lua require('fzf-lua').git_commits()<CR>
-" noremap <space>gb <cmd>lua require('fzf-lua').git_branches()<CR>
-" noremap <space>gs <cmd>lua require('fzf-lua').git_status()<CR>
-" noremap <space>gh <cmd>lua require('fzf-lua').git_stash()<CR>
-" nnoremap <space>va <cmd>lua require('fzf-lua').builtin()<CR>
-" nnoremap <space>y <cmd>lua require('neoclip.fzf')()<CR>
-" inoremap <C-space>y <cmd>lua require('neoclip.fzf')()<CR>
+nnoremap <space>, <cmd>lua require('fzf-lua').live_grep()<CR>
+nnoremap <space>/ <cmd>lua require('fzf-lua').grep()<CR>
+nnoremap <space>* <cmd>lua require('fzf-lua').grep_cword()<CR>
+noremap <space>v <cmd>lua require('fzf-lua').grep_visual()<CR>
+noremap <space>r <cmd>lua require('fzf-lua').grep_last()<CR>
+noremap <space>gc <cmd>lua require('fzf-lua').git_commits()<CR>
+noremap <space>gb <cmd>lua require('fzf-lua').git_branches()<CR>
+noremap <space>gs <cmd>lua require('fzf-lua').git_status()<CR>
+noremap <space>gh <cmd>lua require('fzf-lua').git_stash()<CR>
+noremap <space>vc <cmd>lua require('fzf-lua').commands()<CR>
+noremap <space>m <cmd>lua require('fzf-lua').marks()<CR>
+nnoremap <space>va <cmd>lua require('fzf-lua').builtin()<CR>
+nnoremap <space>y <cmd>lua require('neoclip.fzf')()<CR>
+inoremap <C-space>y <cmd>lua require('neoclip.fzf')()<CR>
 
 " move buffer in new tab
 map <c-t> <c-W><S-t>
