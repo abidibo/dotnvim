@@ -343,15 +343,15 @@ lua require'telescope'.setup{
 lua require'fzf-lua'.setup {
     \ previewers = {
         \ git_diff = {
-            \ pager = "delta --show-syntax-themes --line-numbers  --width $FZF_PREVIEW_COLUMNS",
+            \ pager = "delta --line-numbers  --width $FZF_PREVIEW_COLUMNS",
         \ }
     \ },
     \ git = {
         \ commits = {
-            \ preview = "git show --pretty='%Cred%H%n%Cblue%an%n%Cgreen%s' --color {1} | delta --show-syntax-themes --line-numbers --width $FZF_PREVIEW_COLUMNS",
+            \ preview = "git show --pretty='%Cred%H%n%Cblue%an%n%Cgreen%s' --color {1} | delta --line-numbers --width $FZF_PREVIEW_COLUMNS",
         \ },
         \ bcommits = {
-            \ preview = "git show --pretty='%Cred%H%n%Cblue%an%n%Cgreen%s' --color {1} | delta --show-syntax-themes --line-numbers --width $FZF_PREVIEW_COLUMNS",
+            \ preview = "git show --pretty='%Cred%H%n%Cblue%an%n%Cgreen%s' --color {1} | delta --line-numbers --width $FZF_PREVIEW_COLUMNS",
         \}
     \ }
 \ }
