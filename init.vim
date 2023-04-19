@@ -6,6 +6,8 @@ call plug#begin("~/.config/nvim/plugged")
   " Plug 'embear/vim-localvimrc'
   Plug 'MarcWeber/vim-addon-local-vimrc'
 
+  Plug 'github/copilot.vim'
+
   " theme
   Plug 'morhetz/gruvbox'
   Plug 'joshdick/onedark.vim'
@@ -20,6 +22,11 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'voldikss/vim-floaterm'
   Plug 'skywind3000/asynctasks.vim'
   Plug 'skywind3000/asyncrun.vim'
+
+  " Chat gpt
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+  Plug 'muniftanjim/nui.nvim'
+  Plug 'jackmort/chatgpt.nvim'
 
   " file searching
   Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
@@ -95,6 +102,7 @@ call plug#begin("~/.config/nvim/plugged")
 
   " python
   Plug 'mgedmin/python-imports.vim'
+  Plug 'fisadev/vim-isort'
 
   " Doge
   Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
@@ -236,6 +244,11 @@ nmap <leader>src :so $MYVIMRC<CR>
 lua require'leap'.set_default_keymaps()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Chat GPT
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua require'chatgpt'.setup()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " python
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PEP8
@@ -318,41 +331,70 @@ nnoremap <silent> <C-m> :call <SID>find_file_no_focus()<CR>
 " fzf | Telescope
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" lua require'telescope'.setup{
-"     \ pickers = {
-"         \ current_buffer_fuzzy_find = { sorting_strategy = 'ascending' }
-"     \ }
-" \ }
+lua require'telescope'.setup{
+    \ pickers = {
+        \ git_files = { sorting_strategy = 'ascending' },
+        \ git_commits = { sorting_strategy = 'ascending' },
+        \ git_bcommits = { sorting_strategy = 'ascending' }
+    \ }
+\ }
+
+
+lua require'fzf-lua'.setup {
+    \ previewers = {
+        \ git_diff = {
+            \ pager = "delta --show-syntax-themes --line-numbers  --width $FZF_PREVIEW_COLUMNS",
+        \ }
+    \ },
+    \ git = {
+        \ commits = {
+            \ preview = "git show --pretty='%Cred%H%n%Cblue%an%n%Cgreen%s' --color {1} | delta --show-syntax-themes --line-numbers --width $FZF_PREVIEW_COLUMNS",
+        \ },
+        \ bcommits = {
+            \ preview = "git show --pretty='%Cred%H%n%Cblue%an%n%Cgreen%s' --color {1} | delta --show-syntax-themes --line-numbers --width $FZF_PREVIEW_COLUMNS",
+        \}
+    \ }
+\ }
+
 
 " nnoremap <space>f <cmd>Telescope find_files<cr>
 " nnoremap <space>, <cmd>Telescope live_grep<cr>
 " nnoremap <space>h <cmd>Telescope help_tags<cr>
-" nnoremap <space>gf <cmd>Telescope git_files<cr>
 " nnoremap <space>* <cmd>Telescope grep_string<cr>
 " nnoremap <space>vb <cmd>Telescope buffers<cr>
 " noremap <space>vc <cmd>Telescope commands<cr>
-" noremap <space>vs <cmd>Telescope search_history<cr>
+noremap <space>vs <cmd>Telescope search_history<cr>
 " noremap <space>vq <cmd>Telescope quickfix<cr>
 " noremap <space>m <cmd>Telescope marks<cr>
 " " noremap <space>y <cmd>Telescope registers<cr>
-" noremap <space>y <cmd>Telescope neoclip a<cr>
+noremap <space>y <cmd>Telescope neoclip a<cr>
 " " noremap <space>vs <cmd>Telescope spell_suggest<cr>
 " noremap <space>b <cmd>Telescope current_buffer_fuzzy_find<cr>
 " " noremap <space>bt <cmd>Telescope current_buffer_tags<cr>
 " noremap <space>r <cmd>Telescope resume<cr>
+" noremap <space>va <cmd>Telescope builtin<cr>
+" nnoremap <silent><nowait> <space>t  :<C-u>CocList tasks<cr>
+nnoremap <space>gf <cmd>Telescope git_files<cr>
 " noremap <space>gc <cmd>Telescope git_commits<cr>
 " noremap <space>gx <cmd>Telescope git_bcommits<cr>
 " noremap <space>gb <cmd>Telescope git_branches<cr>
 " noremap <space>gs <cmd>Telescope git_status<cr>
 " noremap <space>gt <cmd>Telescope git_stash<cr>
-" noremap <space>va <cmd>Telescope builtin<cr>
-" nnoremap <silent><nowait> <space>t  :<C-u>CocList tasks<cr>
+
+nnoremap <space>z <cmd>ChatGPT<CR>
+
+
+
+noremap <space>gc <cmd>lua require('fzf-lua').git_commits()<CR>
+nnoremap <space>c <cmd>lua require('fzf-lua').git_bcommits()<CR>
+noremap <space>gb <cmd>lua require('fzf-lua').git_branches()<CR>
+noremap <space>gs <cmd>lua require('fzf-lua').git_status()<CR>
+noremap <space>gh <cmd>lua require('fzf-lua').git_stash()<CR>
 
 nnoremap <space>f <cmd>lua require('fzf-lua').files()<CR>
 nnoremap <space>b <cmd>lua require('fzf-lua').buffers()<CR>
 nnoremap <space>ll <cmd>lua require('fzf-lua').lines()<CR>
 nnoremap <space>lb <cmd>lua require('fzf-lua').blines()<CR>
-nnoremap <space>c <cmd>lua require('fzf-lua').git_bcommits()<CR>
 nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 nnoremap <silent><nowait> <space>t  :<C-u>CocList tasks<cr>
 nnoremap <space>, <cmd>lua require('fzf-lua').live_grep()<CR>
@@ -360,15 +402,11 @@ nnoremap <space>/ <cmd>lua require('fzf-lua').grep()<CR>
 nnoremap <space>* <cmd>lua require('fzf-lua').grep_cword()<CR>
 noremap <space>v <cmd>lua require('fzf-lua').grep_visual()<CR>
 noremap <space>r <cmd>lua require('fzf-lua').grep_last()<CR>
-noremap <space>gc <cmd>lua require('fzf-lua').git_commits()<CR>
-noremap <space>gb <cmd>lua require('fzf-lua').git_branches()<CR>
-noremap <space>gs <cmd>lua require('fzf-lua').git_status()<CR>
-noremap <space>gh <cmd>lua require('fzf-lua').git_stash()<CR>
 noremap <space>vc <cmd>lua require('fzf-lua').commands()<CR>
 noremap <space>m <cmd>lua require('fzf-lua').marks()<CR>
 nnoremap <space>va <cmd>lua require('fzf-lua').builtin()<CR>
-nnoremap <space>y <cmd>lua require('neoclip.fzf')()<CR>
-inoremap <C-space>y <cmd>lua require('neoclip.fzf')()<CR>
+" nnoremap <space>y <cmd>lua require('neoclip.fzf')()<CR>
+" inoremap <C-space>y <cmd>lua require('neoclip.fzf')()<CR>
 
 " move buffer in new tab
 map <c-t> <c-W><S-t>
@@ -396,7 +434,7 @@ inoremap <silent><expr> <TAB>
     \ <SID>check_back_space() ? "\<Tab>" :
     \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-inoremap <silent><expr> <c-space> coc#refresh()
+" inoremap <silent><expr> <c-space> coc#refresh()
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -404,11 +442,11 @@ function! s:check_back_space() abort
 endfunction
 
 " Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+" if has('nvim')
+"   inoremap <silent><expr> <c-space> coc#refresh()
+" else
+"   inoremap <silent><expr> <c-@> coc#refresh()
+" endif
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
@@ -680,6 +718,15 @@ nnoremap <leader><F8> <Plug>VimspectorRunToCursor
 nnoremap <leader>so <Plug>VimspectorStepOver
 nnoremap <leader>si <Plug>VimspectorStepInto
 nnoremap <leader>su <Plug>VimspectorStepOut
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Copilot
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+imap <silent><script><expr> <c-space> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
+
+imap <s-tab> <Plug>(copilot-next)
+nnoremap <leader>cp :Copilot<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Startify
