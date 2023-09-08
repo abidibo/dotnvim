@@ -1,8 +1,5 @@
 -- colorscheme
-vim.cmd [[
-  syntax enable
-  colorscheme onedark
-]]
+require('onedark').load()
 -- font
 vim.opt.guifont = 'Roboto Mono Nerd Font Complete 11'
 -- display tabs and trailing spaces visually

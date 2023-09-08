@@ -25,10 +25,12 @@ call plug#begin("~/.config/nvim/plugged")
 
   " Chat gpt
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+  Plug 'fannheyward/telescope-coc.nvim'
   Plug 'muniftanjim/nui.nvim'
   Plug 'jackmort/chatgpt.nvim'
 
   " file searching
+  Plug 'stevearc/oil.nvim'
   Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
   " Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
   " optional for icon support
@@ -70,7 +72,7 @@ call plug#begin("~/.config/nvim/plugged")
 
   " clipboard
   Plug 'ibhagwan/nvim-neoclip.lua'
-  Plug 'junegunn/vim-peekaboo'
+  " Plug 'junegunn/vim-peekaboo'
 
   " undo
   Plug 'sjl/gundo.vim'
@@ -128,7 +130,7 @@ call plug#begin("~/.config/nvim/plugged")
   Plug 'puremourning/vimspector'
 
   " Misc
-  Plug 'MilesCranmer/gso'
+  " Plug 'MilesCranmer/gso'
 
 call plug#end()
 
@@ -246,7 +248,9 @@ lua require'leap'.set_default_keymaps()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Chat GPT
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-lua require'chatgpt'.setup()
+lua require'chatgpt'.setup {
+    \ popup_input = { submit = '<CR>' }
+\ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " python
@@ -338,12 +342,14 @@ lua require'telescope'.setup{
         \ git_bcommits = { sorting_strategy = 'ascending' }
     \ }
 \ }
+lua require'telescope'.load_extension('coc')
 
 
+" pager = delta --show-syntax-themes --line-numbers  --width $FZF_PREVIEW_COLUMNS
 lua require'fzf-lua'.setup {
     \ previewers = {
         \ git_diff = {
-            \ pager = "delta --line-numbers  --width $FZF_PREVIEW_COLUMNS",
+            \ pager = "delta --line-numbers --syntax-theme Coldark-Dark --width $FZF_PREVIEW_COLUMNS",
         \ }
     \ },
     \ git = {
@@ -462,7 +468,7 @@ nmap <silent> <Leader>k <Plug>(coc-diagnostic-prev-error)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gr :Telescope coc references<CR>
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -727,6 +733,13 @@ let g:copilot_no_tab_map = v:true
 
 imap <s-tab> <Plug>(copilot-next)
 nnoremap <leader>cp :Copilot<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Oil
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua require'oil'.setup{}
+nmap <leader>- :Oil<CR>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Startify
