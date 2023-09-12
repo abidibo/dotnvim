@@ -1,7 +1,7 @@
 -- colorscheme
 require('onedark').load()
 -- font
-vim.opt.guifont = 'Roboto Mono Nerd Font Complete 11'
+vim.opt.guifont = 'agave Nerd Font:h12'
 -- display tabs and trailing spaces visually
 vim.opt.listchars = 'tab:| ,lead:·,trail:·,eol:$'
 -- highlight cursor line

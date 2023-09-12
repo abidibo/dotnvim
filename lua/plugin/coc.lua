@@ -8,6 +8,7 @@ vim.api.nvim_set_keymap('n', '<space>t',
     ":CocList tasks<CR>",
     { noremap = true, silent = true, nowait = true })
 
+vim.api.nvim_set_keymap("n", "<leader>rn", "<Plug>(coc-rename)", {silent = true})
 vim.api.nvim_set_keymap("n", "gd", "<Plug>(coc-definition)", {silent = true})
 vim.api.nvim_set_keymap("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
 vim.api.nvim_set_keymap("n", "gi", "<Plug>(coc-implementation)", {silent = true})
@@ -24,7 +25,5 @@ vim.cmd([[
     endfunction
 
     inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
+      \ pumvisible() ? "\<C-n>" : "\<Tab>"
 ]])

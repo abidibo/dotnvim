@@ -3,10 +3,14 @@ vim.g.loaded = 1
 vim.g.loaded_netrwPlugin = 1
 
 require("nvim-tree").setup({
-  -- open_on_setup = true,
-  -- open_on_setup_file = true,
+  filters = { custom = { ".pyc$" } },
+  git = { enable = false },
+  diagnostics = { enable = true, show_on_dirs = true },
   open_on_tab = true,
 })
+
+vim.keymap.set('n', '<C-m>', ':NvimTreeFindFile<CR><c-w>l')
+
 local function open_nvim_tree()
     -- always open the tree
     require("nvim-tree.api").tree.open()

@@ -55,8 +55,10 @@ packer.startup(function()
   require("plugin/nvim-tree")
 
   -- tabs
-  use 'webdevel/tabulous'
-  require("plugin/tabulous")
+  use 'nanozuki/tabby.nvim'
+  require("plugin/tabby")
+  -- use 'webdevel/tabulous'
+  -- require("plugin/tabulous")
   use 'christoomey/vim-tmux-navigator'
 
   -- Clipboard
@@ -69,6 +71,13 @@ packer.startup(function()
   -- history
   use 'sjl/gundo.vim'
   require("plugin/gundo")
+
+  -- status bar
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+  }
+  require("plugin/lualine")
 
   -- tagbar
   use 'preservim/tagbar'
@@ -98,8 +107,35 @@ packer.startup(function()
   use 'puremourning/vimspector'
   require("plugin/vimspector")
 
+  -- search and replace
+  use 'nvim-pack/nvim-spectre'
+  require("plugin/nvim-spectre")
+
+  -- keybindings
+  use {
+    "folke/which-key.nvim",
+    config = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+      require("which-key").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
+
   -- css
   use 'ap/vim-css-color'
+
+  -- commentary
+  use 'tpope/vim-commentary'
+
+  -- surroundings
+  use 'tpope/vim-surround'
+
+  -- indentation
+  use "lukas-reineke/indent-blankline.nvim"
 
   -- docs
   use {
@@ -113,6 +149,8 @@ packer.startup(function()
   require("plugin/fugitive")
   use 'junegunn/gv.vim'
   use "sindrets/diffview.nvim" 
+  use "lewis6991/gitsigns.nvim"
+  require("plugin/gitsigns")
 
   -- markdown
   use({
@@ -149,6 +187,7 @@ packer.startup(function()
   use 'tpope/vim-repeat'
   use 'RRethy/vim-illuminate'
   use 'tyru/open-browser.vim'
+  use 'terryma/vim-multiple-cursors'
 
   end
 )
