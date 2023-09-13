@@ -34,6 +34,7 @@ vim.g.startify_custom_header = {
     }
 
 
+vim.g.startify_change_to_dir = 0
 vim.g.startify_files_number = 5 -- show 5 most recent files
 vim.g.startify_bookmarks = {
   { i = '~/.config/nvim/init.lua' },
@@ -59,7 +60,7 @@ end
 vim.g.startify_lists = {
   { type = "commands", header = { "    Commands" } }, -- Commands from above
   { type = "dir", header = { "    MRU " .. vim.fn.getcwd() } }, -- MRU files from CWD
-  { type = "sessions",  header = {"   Sessions"} },
+  -- { type = "sessions",  header = {"   Sessions"} },
   { type = "bookmarks", header = {"   Bookmarks"} },
   { type = CommandToStartifyTable("git ls-files -m"), header = {"   Git modified"} },
   { type = CommandToStartifyTable("git ls-files -o --exclude-standard"), header = {"   Git untracked"} }

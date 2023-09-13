@@ -14,12 +14,13 @@ vim.keymap.set('n', '<C-m>', ':NvimTreeFindFile<CR><c-w>l')
 local function open_nvim_tree()
     -- always open the tree
     require("nvim-tree.api").tree.open()
+    vim.api.nvim_command("wincmd w")
 end
 vim.cmd([[
 autocmd VimEnter *
             \   if !argc()
             \ |   Startify
-            \ |   NvimTreeToggle
+            \ |   wincmd w
 ]])
 vim.cmd([[
 autocmd VimEnter *

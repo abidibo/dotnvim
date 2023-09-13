@@ -61,3 +61,7 @@ vim.api.nvim_set_keymap('n', '<space>vm',
 vim.api.nvim_set_keymap('n', '<space>va',
     "<cmd>lua require('fzf-lua').builtin()<CR>",
     { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', '<space>gr',
+    "<Plug>(coc-references)",
+    { noremap = true, silent = true })

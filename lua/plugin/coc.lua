@@ -13,6 +13,12 @@ vim.api.nvim_set_keymap("n", "gd", "<Plug>(coc-definition)", {silent = true})
 vim.api.nvim_set_keymap("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
 vim.api.nvim_set_keymap("n", "gi", "<Plug>(coc-implementation)", {silent = true})
 vim.api.nvim_set_keymap("n", "gr", "<Plug>(coc-references)", {silent = true})
+
+vim.api.nvim_set_keymap("x", "<leader>a", "<Plug>(coc-codeaction-selected)", {})
+vim.api.nvim_set_keymap("n", "<leader>a", "<Plug>(coc-codeaction-selected)", {})
+vim.api.nvim_set_keymap("n", "<leader>a*", "<Plug>(coc-codeaction-cursor)", {})
+vim.api.nvim_set_keymap("n", "ga", "<Plug>(coc-codeaction-line)", {silent=true})
+
 -- vim.api.nvim_set_keymap("i", "<TAB>", "pumvisible() ? '<C-n>' : '<TAB>'", {noremap = true, silent = true, expr = true})
 -- vim.api.nvim_set_keymap("i", "<S-TAB>", "pumvisible() ? '<C-p>' : '<C-h>'", {noremap = true, expr = true})
 vim.api.nvim_set_keymap("i", "<CR>", "coc#pum#visible() ? coc#_select_confirm() : '<C-G>u<CR><C-R>=coc#on_enter()<CR>'", {silent = true, expr = true, noremap = true})
@@ -26,4 +32,27 @@ vim.cmd([[
 
     inoremap <silent><expr> <Tab>
       \ pumvisible() ? "\<C-n>" : "\<Tab>"
+]])
+
+vim.cmd([[
+  command! -nargs=0 Format :call CocAction('format')
+  map <leader>f  :Format<cr>
+
+  command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+  command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+  command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+  nnoremap <silent> K :call <SID>show_documentation()<CR>
 ]])
