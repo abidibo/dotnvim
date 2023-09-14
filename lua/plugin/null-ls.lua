@@ -15,6 +15,9 @@ null_ls.setup({
     null_ls.builtins.formatting.black.with({
         filetypes = { "python", "python.django" },
     }),
+    null_ls.builtins.diagnostics.ruff.with({
+        filetypes = { "python", "python.django" },
+    }),
     null_ls.builtins.formatting.gofumpt,
   },
   on_attach = function(client, bufnr)

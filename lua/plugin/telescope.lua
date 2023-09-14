@@ -17,6 +17,7 @@ vim.keymap.set('n', '<space>/', function()
 end)
 vim.api.nvim_set_keymap('n', '<space>,', "<cmd>Telescope live_grep<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<space>*', "<cmd>Telescope grep_string<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<space>r', "<cmd>Telescope resume<CR>", { noremap = true, silent = true })
 
 local previewers = require('telescope.previewers')
 local conf = require('telescope.config')

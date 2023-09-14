@@ -125,6 +125,7 @@ packer.startup(function()
   require("plugin/nvim-prettier")
 
   use 'mattn/emmet-vim'
+  require("plugin/emmet")
   use 'github/copilot.vim'
   require("plugin/copilot")
 

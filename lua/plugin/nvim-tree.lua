@@ -11,22 +11,22 @@ require("nvim-tree").setup({
 
 vim.keymap.set('n', '<C-m>', ':NvimTreeFindFile<CR><c-w>l')
 
-local function open_nvim_tree()
-    -- always open the tree
-    require("nvim-tree.api").tree.open()
-    vim.api.nvim_command("wincmd w")
-end
-vim.cmd([[
-autocmd VimEnter *
-            \   if !argc()
-            \ |   Startify
-            \ |   wincmd w
-]])
-vim.cmd([[
-autocmd VimEnter *
-            \   if !argc()
-            \ |   wincmd w
-]])
-vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+-- local function open_nvim_tree()
+--     -- always open the tree
+--     require("nvim-tree.api").tree.open()
+--     vim.api.nvim_command("wincmd w")
+-- end
+-- vim.cmd([[
+-- autocmd VimEnter *
+--             \   if !argc()
+--             \ |   Startify
+--             \ |   wincmd w
+-- ]])
+-- vim.cmd([[
+-- autocmd VimEnter *
+--             \   if !argc()
+--             \ |   wincmd w
+-- ]])
+-- vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 vim.keymap.set('n', '<C-f>', ':NvimTreeToggle<CR>')
 

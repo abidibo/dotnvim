@@ -5,7 +5,6 @@ lsp.preset("recommended")
 lsp.ensure_installed({
   'tsserver',
   'rust_analyzer',
-  'pylyzer',
 })
 
 -- Fix Undefined global 'vim'
@@ -46,7 +45,12 @@ lsp.set_preferences({
 lsp.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}
 
-  vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+
+  -- vim.keymap.set("n", "gd", "<c-w>v<cmd>vim.lsp.buf.definition()<cr>", opts)
+  vim.keymap.set("n", "gd", function() 
+    vim.cmd("vsplit")
+    vim.lsp.buf.definition() 
+  end, opts)
   vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
   vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, opts)
   vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
@@ -66,3 +70,14 @@ lsp.setup()
 vim.diagnostic.config({
     virtual_text = true
 })
+
+
+require('lspconfig').ruff_lsp.setup {
+  on_attach = on_attach,
+  init_options = {
+    settings = {
+      -- Any extra CLI arguments for `ruff` go here.
+      args = {},
+    }
+  }
+}
