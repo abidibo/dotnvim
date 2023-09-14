@@ -29,16 +29,10 @@ packer.startup(function()
 
   -- fuzzy finder
   use {
-    'junegunn/fzf',
-    run = './install --bin',
+	  'nvim-telescope/telescope.nvim', tag = '0.1.2',
+	  requires = { {'nvim-lua/plenary.nvim'} }
   }
-  use {
-    'ibhagwan/fzf-lua',
-    -- optional for icon support
-    requires = { 'kyazdani42/nvim-web-devicons' },
-  }
-  require('plugin/fzf-lua')
-
+  require("plugin/telescope")
   -- filesystem
   use { 'stevearc/oil.nvim' }
   require("plugin/oil")
@@ -69,8 +63,8 @@ packer.startup(function()
   require("plugin/nvim-neoclip")
 
   -- history
-  use 'sjl/gundo.vim'
-  require("plugin/gundo")
+  use 'mbbill/undotree'
+  require("plugin/undotree")
 
   -- status bar
   use {
@@ -83,22 +77,53 @@ packer.startup(function()
   use 'preservim/tagbar'
   require("plugin/tagbar")
 
+  -- pairs
+
+  use "windwp/nvim-autopairs"
+  require("plugin/nvim-autopairs")
+  use 'windwp/nvim-ts-autotag'
+  require("plugin/nvim-ts-autotag")
+
   -- tasks
   use 'preservim/vimux'
   use 'skywind3000/asynctasks.vim'
   use 'skywind3000/asyncrun.vim'
   use 'voldikss/vim-floaterm'
   require("plugin/vim-floaterm")
+  use 'GustavoKatel/telescope-asynctasks.nvim'
 
   -- syntax
   use 'sheerun/vim-polyglot'
 
   -- code completion and stuff
-  use {'neoclide/coc.nvim', branch = 'release'}
-  require('plugin/coc')
-  use 'SirVer/ultisnips'
-  -- use 'mlaursen/vim-react-snippets'
-  use 'honza/vim-snippets'
+  use {
+	  'VonHeikemen/lsp-zero.nvim',
+	  branch = 'v1.x',
+	  requires = {
+		  -- LSP Support
+		  {'neovim/nvim-lspconfig'},
+		  {'williamboman/mason.nvim'},
+		  {'williamboman/mason-lspconfig.nvim'},
+
+		  -- Autocompletion
+		  {'hrsh7th/nvim-cmp'},
+		  {'hrsh7th/cmp-buffer'},
+		  {'hrsh7th/cmp-path'},
+		  {'saadparwaiz1/cmp_luasnip'},
+		  {'hrsh7th/cmp-nvim-lsp'},
+		  {'hrsh7th/cmp-nvim-lua'},
+
+		  -- Snippets
+		  {'L3MON4D3/LuaSnip'},
+		  {'rafamadriz/friendly-snippets'},
+	  }
+  }
+  require("plugin/lsp")
+  use('jose-elias-alvarez/null-ls.nvim')
+  require("plugin/null-ls")
+  use('MunifTanjim/prettier.nvim')
+  require("plugin/nvim-prettier")
+
   use 'mattn/emmet-vim'
   use 'github/copilot.vim'
   require("plugin/copilot")
@@ -112,18 +137,8 @@ packer.startup(function()
   require("plugin/nvim-spectre")
 
   -- keybindings
-  use {
-    "folke/which-key.nvim",
-    config = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
-      require("which-key").setup {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      }
-    end
-  }
+  use "folke/which-key.nvim"
+  -- require("plugin/which-key")
 
   -- css
   use 'ap/vim-css-color'
@@ -186,6 +201,7 @@ packer.startup(function()
   }
   use 'tpope/vim-repeat'
   use 'RRethy/vim-illuminate'
+  require("plugin/vim-illuminate")
   use 'tyru/open-browser.vim'
   use 'terryma/vim-multiple-cursors'
 

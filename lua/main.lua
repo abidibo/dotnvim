@@ -5,7 +5,7 @@ vim.opt.updatetime = 300
 -- sets how many lines of history VIM has to remember
 vim.opt.history = 1000
 -- persistent undo
-vim.opt.undodir = '/home/abidibo/.vim/backups'
+vim.opt.undodir = os.getenv('HOME') .. '/.vim/undodir'
 vim.opt.undofile = true
 -- ignore case when searching
 vim.opt.ignorecase = true
