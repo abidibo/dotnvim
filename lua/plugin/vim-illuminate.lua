@@ -1,1 +1,1 @@
- vim.cmd("hi IlluminatedWordRead guibg=#111111")
+ vim.cmd("hi IlluminatedWordRead guibg=#333333")

@@ -139,11 +139,6 @@ _G.packer_plugins = {
     path = "/home/abidibo/.local/share/nvim/site/pack/packer/start/fzf-lua",
     url = "https://github.com/ibhagwan/fzf-lua"
   },
-  ["gitsigns.nvim"] = {
-    loaded = true,
-    path = "/home/abidibo/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
-    url = "https://github.com/lewis6991/gitsigns.nvim"
-  },
   ["gv.vim"] = {
     loaded = true,
     path = "/home/abidibo/.local/share/nvim/site/pack/packer/start/gv.vim",
@@ -153,6 +148,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/abidibo/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
+  },
+  ["kanagawa.nvim"] = {
+    loaded = true,
+    path = "/home/abidibo/.local/share/nvim/site/pack/packer/start/kanagawa.nvim",
+    url = "https://github.com/rebelot/kanagawa.nvim"
   },
   ["leap.nvim"] = {
     loaded = true,
@@ -183,6 +183,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/abidibo/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
+  },
+  ["no-clown-fiesta.nvim"] = {
+    loaded = true,
+    path = "/home/abidibo/.local/share/nvim/site/pack/packer/start/no-clown-fiesta.nvim",
+    url = "https://github.com/aktersnurra/no-clown-fiesta.nvim"
   },
   ["null-ls.nvim"] = {
     loaded = true,
@@ -293,6 +298,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/abidibo/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
+  },
+  ["tokyonight.nvim"] = {
+    loaded = true,
+    path = "/home/abidibo/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
+    url = "https://github.com/folke/tokyonight.nvim"
   },
   undotree = {
     loaded = true,

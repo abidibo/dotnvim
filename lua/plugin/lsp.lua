@@ -81,3 +81,21 @@ require('lspconfig').ruff_lsp.setup {
     }
   }
 }
+
+cmp.setup({
+  sources = {
+    {name = 'nvim_lsp', keyword_length = 1, max_item_count = 8},
+    {name = 'luasnip', keyword_length = 3, max_item_count = 5},
+    {
+      name = 'buffer',
+      keyword_length = 2,
+      max_item_count = 5,
+      option = {
+        get_bufnrs = function()
+          return vim.api.nvim_list_bufs()
+        end
+      }
+    },
+    {name = 'path', keyword_length = 2},
+  }
+})

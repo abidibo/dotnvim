@@ -24,6 +24,9 @@ null_ls.setup({
     if client.name == "djlint" then                                                                                                   
         client.server_capabilities.documentFormattingProvider = false -- 0.8 and later
     end
+    if client.name == "ruff" then                                                                                                   
+        client.server_capabilities.publishDiagnostics = false -- 0.8 and later
+    end
     if client.supports_method("textDocument/formatting") then
       vim.keymap.set("n", "<Leader>f", function()
         vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })

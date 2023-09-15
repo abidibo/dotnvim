@@ -65,3 +65,5 @@ vim.g.startify_lists = {
   { type = CommandToStartifyTable("git ls-files -m"), header = {"   Git modified"} },
   { type = CommandToStartifyTable("git ls-files -o --exclude-standard"), header = {"   Git untracked"} }
 }
+
+vim.cmd [[highlight StartifyHeader ctermfg=10 guifg=#939393]]

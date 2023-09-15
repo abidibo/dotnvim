@@ -19,6 +19,9 @@ packer.startup(function()
 
   -- colorscheme
   use 'navarasu/onedark.nvim'
+  use 'aktersnurra/no-clown-fiesta.nvim'
+  use "rebelot/kanagawa.nvim"
+  use 'folke/tokyonight.nvim'
 
   -- startify
   use 'mhinz/vim-startify'
@@ -165,8 +168,9 @@ packer.startup(function()
   require("plugin/fugitive")
   use 'junegunn/gv.vim'
   use "sindrets/diffview.nvim" 
-  use "lewis6991/gitsigns.nvim"
-  require("plugin/gitsigns")
+  use "sindrets/diffview.nvim" 
+  -- use "lewis6991/gitsigns.nvim"
+  -- require("plugin/gitsigns")
 
   -- markdown
   use({
