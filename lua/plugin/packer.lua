@@ -96,7 +96,7 @@ packer.startup(function()
   use 'GustavoKatel/telescope-asynctasks.nvim'
 
   -- syntax
-  use 'sheerun/vim-polyglot'
+  -- use 'sheerun/vim-polyglot'
 
   -- code completion and stuff
   use {
@@ -199,11 +199,19 @@ packer.startup(function()
   }
   require("plugin/rest")
 
-  -- utils
+  -- syntax
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate'
   }
+  use({
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    after = "nvim-treesitter",
+    requires = "nvim-treesitter/nvim-treesitter",
+  })
+  require("plugin/treesitter")
+
+  -- utils
   use 'tpope/vim-repeat'
   use 'RRethy/vim-illuminate'
   require("plugin/vim-illuminate")

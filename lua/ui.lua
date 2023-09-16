@@ -1,8 +1,15 @@
 -- colorscheme
-vim.cmd[[colorscheme tokyonight]]
-require('onedark').setup {
-    style = 'darker'
+require("tokyonight").setup {
+    -- transparent = true,
+    -- styles = {
+    --    sidebars = "transparent",
+    --    floats = "transparent",
+    -- }
 }
+vim.cmd[[colorscheme tokyonight]]
+-- require('onedark').setup {
+--     style = 'darker'
+-- }
 -- require('onedark').load()
 -- require("no-clown-fiesta").setup({
 --   transparent = false,

@@ -4,7 +4,6 @@ lsp.preset("recommended")
 
 lsp.ensure_installed({
   'tsserver',
-  'rust_analyzer',
 })
 
 -- Fix Undefined global 'vim'
@@ -18,7 +17,7 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
   -- ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
   -- ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
   -- ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-  -- ["<C-Space>"] = cmp.mapping.complete(),
+  ["<c-s>"] = cmp.mapping.complete(),
   ['<Tab>'] = cmp_action.luasnip_supertab(),
   ['<S-Tab>'] = cmp_action.luasnip_shift_supertab(),
   ['<CR>'] = cmp.mapping.confirm({select = false}),
@@ -58,7 +57,7 @@ lsp.on_attach(function(client, bufnr)
   -- vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
   vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
   vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
-  vim.keymap.set("n", "<leader>a", function() vim.lsp.buf.code_action() end, opts)
+  vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
   vim.keymap.set("n", "<leader>gr", function() vim.lsp.buf.references() end, opts)
   vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
   vim.keymap.set("i", "<leader>h", function() vim.lsp.buf.signature_help() end, opts)
@@ -84,12 +83,12 @@ require('lspconfig').ruff_lsp.setup {
 
 cmp.setup({
   sources = {
-    {name = 'nvim_lsp', keyword_length = 1, max_item_count = 8},
-    {name = 'luasnip', keyword_length = 3, max_item_count = 5},
+    {name = 'nvim_lsp', keyword_length = 1 },
+    {name = 'luasnip', keyword_length = 2, max_item_count = 5},
     {
       name = 'buffer',
       keyword_length = 2,
-      max_item_count = 5,
+      -- max_item_count = 5,
       option = {
         get_bufnrs = function()
           return vim.api.nvim_list_bufs()
