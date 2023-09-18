@@ -98,3 +98,6 @@ cmp.setup({
     {name = 'path', keyword_length = 2},
   }
 })
+vim.cmd [[
+  autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
+]]

@@ -95,6 +95,11 @@ packer.startup(function()
   require("plugin/vim-floaterm")
   use 'GustavoKatel/telescope-asynctasks.nvim'
 
+  -- db
+  use 'tpope/vim-dadbod'
+  use 'kristijanhusak/vim-dadbod-ui'
+  use 'kristijanhusak/vim-dadbod-completion'
+
   -- syntax
   -- use 'sheerun/vim-polyglot'
 
