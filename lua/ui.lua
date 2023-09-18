@@ -1,12 +1,4 @@
 -- colorscheme
-require("tokyonight").setup {
-    -- transparent = true,
-    -- styles = {
-    --    sidebars = "transparent",
-    --    floats = "transparent",
-    -- }
-}
-vim.cmd[[colorscheme tokyonight]]
 -- require('onedark').setup {
 --     style = 'darker'
 -- }
@@ -22,7 +14,7 @@ vim.cmd[[colorscheme tokyonight]]
 -- vim.cmd[[colorscheme no-clown-fiesta]]
 -- vim.cmd("colorscheme kanagawa")
 -- font
-vim.opt.guifont = 'agave Nerd Font:h12'
+vim.opt.guifont = 'VictorMono Nerd Font:h11'
 -- display tabs and trailing spaces visually
 vim.opt.listchars = 'tab:| ,lead:·,trail:·,eol:$'
 -- highlight cursor line

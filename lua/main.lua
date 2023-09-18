@@ -1,4 +1,3 @@
-vim.g.mapleader = ','
 vim.opt.mouse = 'a'
 -- having longer updatetime (default is 4000 ms = 4 s) leads to noticeable delays and poor user experience.
 vim.opt.updatetime = 300
