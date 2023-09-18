@@ -8,7 +8,6 @@ return {
 	vim.cmd[[colorscheme tokyonight]]
       end
   },
-  "MarcWeber/vim-addon-local-vimrc",
   "christoomey/vim-tmux-navigator",
   "skywind3000/asynctasks.vim",
   "skywind3000/asyncrun.vim",
