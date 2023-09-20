@@ -37,7 +37,6 @@ return {
             vim.cmd("colorscheme kanagawa")
         end
     },
-    "christoomey/vim-tmux-navigator",
     "skywind3000/asynctasks.vim",
     "skywind3000/asyncrun.vim",
     "GustavoKatel/telescope-asynctasks.nvim",
