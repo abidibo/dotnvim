@@ -1,6 +1,6 @@
 return {
     'RRethy/vim-illuminate',
     config = function ()
-        vim.cmd("hi IlluminatedWordRead guibg=#666666")
+        vim.cmd("hi IlluminatedWordRead guibg=#444444")
     end
 }
