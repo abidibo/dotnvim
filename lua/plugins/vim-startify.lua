@@ -42,6 +42,7 @@ return {
       { i = '~/.config/nvim/init.lua' },
       { p = '~/.config/nvim/lua/plugins/init.lua' },
       { b = '~/.bashrc' },
+      { w = '~/.wezterm.lua' },
       { t = '~/.tmux.conf'},
     }
 
