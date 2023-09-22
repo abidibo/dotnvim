@@ -21,5 +21,6 @@ return {
 
         vim.keymap.set('n', '<C-m>', ':NvimTreeFindFile<CR><c-w>l')
         -- vim.keymap.set('n', '<C-f>', ':NvimTreeToggle<CR>')
+        vim.cmd("hi NvimTreeNormal guibg=#101010")
     end
 }

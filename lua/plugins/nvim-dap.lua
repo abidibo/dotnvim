@@ -37,15 +37,15 @@ return {
             },
         }
 
-        -- dap.configurations.javascriptreact = {
-        --   {
-        --     type = 'chrome';
-        --   },
-        -- }
-        -- dap.adapters.chrome = {
-        --   type = "executable",
-        --   command = "node",
-        --   args = { vim.fn.stdpath("data") .. "/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js" },
-        -- }
+        dap.configurations.javascriptreact = {
+          {
+            type = 'chrome';
+          },
+        }
+        dap.adapters.chrome = {
+          type = "executable",
+          command = "node",
+          args = { vim.fn.stdpath("data") .. "/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js" },
+        }
     end
 }
