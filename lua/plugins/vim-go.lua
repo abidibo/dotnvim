@@ -1,5 +1,5 @@
 return {
     'fatih/vim-go',
-    lazy = true,
-    ft = {"go"},
+    -- lazy = true,
+    -- ft = {"go"},
 }
