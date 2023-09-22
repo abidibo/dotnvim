@@ -37,19 +37,6 @@ return {
             },
         }
 
-        -- dap.configurations.go = {
-        --     {
-        --         type = "go",
-        --         name = "Delve container debug",
-        --         request = "attach",
-        --         mode = "remote",
-        --         substitutepath = { {
-        --             from = vim.fn.getcwd(),
-        --             to = "/go/src/app",
-        --         } },
-        --     }
-        -- }
-
         -- dap.configurations.javascriptreact = {
         --   {
         --     type = 'chrome';
