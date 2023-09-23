@@ -20,6 +20,9 @@ return {
                 ['<CR>'] = cmp.mapping.confirm({ select = false }),
                 ['<C-j>'] = cmp_action.luasnip_jump_forward(),
                 ['<C-k>'] = cmp_action.luasnip_jump_backward(),
+                -- ["<c-space>"] = cmp.mapping {
+                --     i = cmp.mapping.complete { reason = cmp.ContextReason.Auto }
+                -- },
             })
 
             lsp_zero.set_preferences({
@@ -64,7 +67,8 @@ return {
             cmp.setup({
                 preselect = 'item',
                 completion = {
-                    completeopt = 'menu,menuone,noinsert'
+                    completeopt = 'menu,menuone,noinsert',
+                    -- autocomplete = false,
                 },
                 mapping = cmp_mappings,
                 snippet = {
