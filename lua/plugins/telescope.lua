@@ -2,12 +2,14 @@ return {
     'nvim-telescope/telescope.nvim', tag = '0.1.3',
      dependencies = { 'nvim-lua/plenary.nvim' },
      config = function ()
+        require('telescope').load_extension('luasnip')
         local builtin = require('telescope.builtin')
 
         vim.api.nvim_set_keymap('n', '<space>f', "<cmd>Telescope find_files<CR>", { noremap = true, silent = true })
         vim.api.nvim_set_keymap('n', '<space>b', "<cmd>Telescope buffers<CR>", { noremap = true, silent = true })
         vim.api.nvim_set_keymap('n', '<space>l', "<cmd>Telescope current_buffer_fuzzy_find<CR>", { noremap = true, silent = true })
         vim.api.nvim_set_keymap('n', '<space>t', "<cmd>Telescope asynctasks all<CR>", { noremap = true, silent = true })
+        vim.api.nvim_set_keymap('n', '<space>s', "<cmd>Telescope luasnip<CR>", { noremap = true, silent = true })
 
         vim.api.nvim_set_keymap('n', '<space>cr', "<cmd>Telescope lsp_references<CR>", { noremap = true, silent = true })
         vim.api.nvim_set_keymap('n', '<space>cs', "<cmd>Telescope lsp_document_symbols<CR>", { noremap = true, silent = true })

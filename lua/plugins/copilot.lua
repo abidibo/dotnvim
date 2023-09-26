@@ -1,5 +1,6 @@
 return {
     'github/copilot.vim',
+    enabled = false,
     config = function ()
         vim.api.nvim_set_keymap('i', '<c-space>', 'copilot#Accept("<CR>")', { noremap=true, expr=true, silent=true })
         vim.api.nvim_set_keymap("i", "<s-tab>", "<Plug>(copilot-next)", {})
