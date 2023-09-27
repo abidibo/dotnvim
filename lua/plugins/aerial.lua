@@ -15,6 +15,6 @@ return {
                 vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', { buffer = bufnr })
             end
         })
-        vim.keymap.set('n', '<leader>8', '<cmd>AerialToggle!<CR>')
+        vim.keymap.set('n', '<leader>8', '<cmd>AerialToggle!<CR>', { desc = 'Toggle outline' })
     end
 }
