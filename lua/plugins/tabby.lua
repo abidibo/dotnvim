@@ -7,6 +7,6 @@ return {
         })
 
         -- add table rename mapping
-        vim.keymap.set('n', '\\trn', ':TabRename ')
+        vim.keymap.set('n', '<leader>tr', ':TabRename ', { desc = 'Tab rename' })
     end
 }

@@ -17,7 +17,7 @@ return {
         vim.api.nvim_set_keymap("n", "\\gp", ":Git push<CR>", { noremap = true })
         vim.api.nvim_set_keymap("n", "\\gl", ":Git pull<CR>", { noremap = true })
         vim.api.nvim_set_keymap("n", "\\gd", ":Gvdiffsplit!<CR>", { noremap = true })
-        vim.api.nvim_set_keymap("n", "\\h", ":diffget //2<CR>", { noremap = true })
-        vim.api.nvim_set_keymap("n", "\\l", ":diffget //3<CR>", { noremap = true })
+        vim.api.nvim_set_keymap("n", "\\gdh", ":diffget //2<CR>", { noremap = true })
+        vim.api.nvim_set_keymap("n", "\\gdl", ":diffget //3<CR>", { noremap = true })
     end
 }

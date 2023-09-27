@@ -3,6 +3,6 @@ return {
     lazy = true,
     cmd = "UndotreeToggle",
     keys = {
-        {"<leader>u", "<cmd>UndotreeToggle<cr>"}
+        {"<leader>vu", "<cmd>UndotreeToggle<cr>", { desc="Toggle undotree" }}
     },
 }

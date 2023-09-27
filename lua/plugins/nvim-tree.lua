@@ -6,20 +6,20 @@ return {
     lazy = true,
     cmd = "NvimTreeToggle",
     keys = {
-        {"<c-f>", "<cmd>NvimTreeToggle<cr>"}
+        { "<leader>e", "<cmd>NvimTreeToggle<cr>", { desc = 'Toggle file explorer' } }
     },
-    config = function ()
+    config = function()
         vim.g.loaded = 1
         vim.g.loaded_netrwPlugin = 1
 
         require("nvim-tree").setup({
-          filters = { custom = { ".pyc$" } },
-          git = { enable = false },
-          diagnostics = { enable = true, show_on_dirs = true },
-          open_on_tab = true,
+            filters = { custom = { ".pyc$" } },
+            git = { enable = false },
+            diagnostics = { enable = true, show_on_dirs = true },
+            open_on_tab = true,
         })
 
-        vim.keymap.set('n', '<C-m>', ':NvimTreeFindFile<CR><c-w>l')
+        vim.keymap.set('n', '<leader>fm', ':NvimTreeFindFile<CR><c-w>l', { desc = 'Find buffer in file explorer' })
         -- vim.keymap.set('n', '<C-f>', ':NvimTreeToggle<CR>')
         vim.cmd("hi NvimTreeNormal guibg=#101010")
     end

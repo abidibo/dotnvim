@@ -3,6 +3,6 @@ return {
     lazy = true,
     cmd = "TagbarToggle",
     keys = {
-        {"<leader>8", "<cmd>TagbarToggle<cr>"}
+        {"<leader>8", "<cmd>TagbarToggle<cr>", { desc='Toggle tagbar'}}
     },
 }

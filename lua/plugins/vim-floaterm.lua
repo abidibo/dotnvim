@@ -1,11 +1,11 @@
 return {
     'voldikss/vim-floaterm',
     config = function ()
-        vim.api.nvim_set_keymap("n", "<leader>tf", ":FloatermNew ranger<CR>", {})
-        vim.api.nvim_set_keymap("n", "<leader>tg", ":FloatermNew lazygit<CR>", {})
-        vim.api.nvim_set_keymap("n", "<leader>tm", ":FloatermNew ncmpcpp<CR>", {})
-        vim.api.nvim_set_keymap("n", "<leader>tt", ":FloatermNew btm<CR>", {})
-        vim.api.nvim_set_keymap("n", "<leader>ts", ":FloatermNew spt<CR>", {})
+        vim.api.nvim_set_keymap("n", "<leader>xf", ":FloatermNew ranger<CR>", {})
+        vim.api.nvim_set_keymap("n", "<leader>xg", ":FloatermNew lazygit<CR>", {})
+        vim.api.nvim_set_keymap("n", "<leader>xm", ":FloatermNew ncmpcpp<CR>", {})
+        vim.api.nvim_set_keymap("n", "<leader>xt", ":FloatermNew btm<CR>", {})
+        vim.api.nvim_set_keymap("n", "<leader>xs", ":FloatermNew spt<CR>", {})
 
         vim.g.floaterm_autoinsert = 1
         vim.g.floaterm_autoclose = 1

@@ -7,12 +7,11 @@ return {
 
         vim.api.nvim_set_keymap("n", "<F5>", ":lua require'dap'.continue()<cr>", { noremap = true })
         vim.api.nvim_set_keymap("n", "<F8>", ":lua require'dap'.toggle_breakpoint()<cr>", { noremap = true })
-        vim.api.nvim_set_keymap("n", "<leader>so", ":lua require'dap'.step_over()<cr>", { noremap = true })
-        vim.api.nvim_set_keymap("n", "<leader>si", ":lua require'dap'.step_into()<cr>", { noremap = true })
-        vim.api.nvim_set_keymap("n", "<leader>su", ":lua require'dap'.step_out()<cr>", { noremap = true })
+        vim.api.nvim_set_keymap("n", ",o", ":lua require'dap'.step_over()<cr>", { noremap = true })
+        vim.api.nvim_set_keymap("n", ",i", ":lua require'dap'.step_into()<cr>", { noremap = true })
+        vim.api.nvim_set_keymap("n", ",u", ":lua require'dap'.step_out()<cr>", { noremap = true })
 
         local dap = require('dap')
-        dap.set_log_level('TRACE')
 
         dap.adapters.go = {
             type = "server",

@@ -6,7 +6,7 @@ return {
     lazy = true,
     cmd = "Oil",
     keys = {
-        {"<leader>-", "<cmd>Oil<cr>"}
+        {"<leader>s.", "<cmd>Oil<cr>"}
     },
     config = function ()
         require("oil").setup()
