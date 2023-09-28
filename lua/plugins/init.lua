@@ -37,6 +37,8 @@ return {
     --         vim.cmd("colorscheme kanagawa")
     --     end
     -- },
+
+    "folke/neodev.nvim",
     "skywind3000/asynctasks.vim",
     "skywind3000/asyncrun.vim",
     "GustavoKatel/telescope-asynctasks.nvim",

@@ -3,6 +3,7 @@ return {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v3.x',
         config = function()
+            require("neodev").setup({})
             local lsp_zero = require("lsp-zero")
             lsp_zero.extend_lspconfig()
             -- lsp_zero.preset("recommended")
@@ -23,16 +24,6 @@ return {
                 -- ["<c-space>"] = cmp.mapping {
                 --     i = cmp.mapping.complete { reason = cmp.ContextReason.Auto }
                 -- },
-            })
-
-            lsp_zero.set_preferences({
-                suggest_lsp_servers = false,
-                sign_icons = {
-                    error = 'E',
-                    warn = 'W',
-                    hint = 'H',
-                    info = 'I'
-                }
             })
 
             lsp_zero.on_attach(function(client, bufnr)
