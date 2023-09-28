@@ -1,5 +1,13 @@
 return {
     "folke/noice.nvim",
+    dependencies = {
+        -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+        "MunifTanjim/nui.nvim",
+        -- OPTIONAL:
+        --   `nvim-notify` is only needed, if you want to use the notification view.
+        --   If not available, we use `mini` as the fallback
+        "rcarriga/nvim-notify",
+    },
     -- enabled = false,
     event = "VeryLazy",
     opts = {
@@ -10,8 +18,11 @@ return {
                 ["cmp.entry.get_documentation"] = true,
             },
         },
+        cmdline = {
+            view = 'cmdline',
+        },
         popupmenu = {
-            enabled = true, -- enables the Noice popupmenu UI
+            enabled = true,  -- enables the Noice popupmenu UI
             ---@type 'nui'|'cmp'
             backend = "nui", -- backend to use to show regular cmdline completions
             ---@type NoicePopupmenuItemKind|false

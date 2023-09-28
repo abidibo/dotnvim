@@ -38,23 +38,24 @@ return {
             lsp_zero.on_attach(function(client, bufnr)
                 vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end,
                     { buffer = bufnr, remap = false, desc = 'Go to definition' })
-                vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, { buffer = bufnr, remap = false, desc = 'Go to declaration' })
-                vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, { buffer = bufnr, remap = false,desc = 'Go to implementation' })
-                vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, { buffer = bufnr, remap = false, desc = 'Show documentation' })
+                vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end,
+                    { buffer = bufnr, remap = false, desc = 'Go to declaration' })
+                vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end,
+                    { buffer = bufnr, remap = false, desc = 'Go to implementation' })
+                vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end,
+                    { buffer = bufnr, remap = false, desc = 'Show documentation' })
                 -- vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, { buffer = bufnr, remap = false })
                 -- vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, { buffer = bufnr, remap = false })
                 vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, { buffer = bufnr, remap = false })
                 vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, { buffer = bufnr, remap = false })
                 vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end,
                     { buffer = bufnr, remap = false, desc = 'Code actions' })
-                vim.keymap.set("n", "<leader>crn", function() vim.lsp.buf.rename() end,
+                vim.keymap.set("n", "<leader>cn", function() vim.lsp.buf.rename() end,
                     { buffer = bufnr, remap = false, desc = 'Rename' })
                 -- vim.keymap.set("i", "<c-h>", function() vim.lsp.buf.signature_help() end, { buffer = bufnr, remap = false })
                 vim.keymap.set("n", "<leader>cf", function() vim.lsp.buf.format() end,
                     { buffer = bufnr, remap = false, desc = 'Code format' })
             end)
-
-            -- lsp_zero.setup()
 
             vim.diagnostic.config({
                 virtual_text = true
@@ -103,6 +104,22 @@ return {
                         local lua_opts = lsp_zero.nvim_lua_ls()
                         require('lspconfig').lua_ls.setup(lua_opts)
                     end,
+                    -- pylsp = function()
+                    --     require('lspconfig').pylsp.setup({
+                    --         settings = {
+                    --             pylsp = {
+                    --                 plugins = {
+                    --                     mccabe = { enabled = false },
+                    --                     -- pyflakes = { enabled = false },
+                    --                     -- flake8 = { enabled = false },
+                    --                     black = { enabled = true },
+                    --                     rope_autoimport = { enabled = true },
+                    --                     -- rope_completion = { enabled = true },
+                    --                 }
+                    --             }
+                    --         }
+                    --     })
+                    -- end
                 }
             })
         end

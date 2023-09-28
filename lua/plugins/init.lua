@@ -48,7 +48,6 @@ return {
     "junegunn/gv.vim",
     "sindrets/diffview.nvim",
     "tpope/vim-commentary",
-    "tpope/vim-surround",
     "tpope/vim-dadbod",
     "kristijanhusak/vim-dadbod-ui",
     "kristijanhusak/vim-dadbod-completion",
