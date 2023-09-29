@@ -22,7 +22,7 @@ return {
 
         require("ibl").setup {
             indent = { highlight = highlight },
-            show_current_context = true,
+            show_current_context = false,
             show_current_context_start = true,
         }
     end
