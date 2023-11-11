@@ -2,6 +2,9 @@ return {
     'mfussenegger/nvim-dap',
     -- enabled = false,
     config = function()
+        vim.g.vimspector_base_dir = '/home/abidibo/.config/nvim/plugged/vimspector'
+        vim.g.vimspector_enable_mappings = 'HUMAN'
+
         vim.api.nvim_set_keymap("n", "<F5>", ":lua require'dap'.continue()<cr>", { noremap = true })
         vim.api.nvim_set_keymap("n", "<F8>", ":lua require'dap'.toggle_breakpoint()<cr>", { noremap = true })
         vim.api.nvim_set_keymap("n", ",o", ":lua require'dap'.step_over()<cr>", { noremap = true })

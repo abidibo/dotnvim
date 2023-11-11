@@ -21,8 +21,8 @@ vim.bo.autoindent = true
 vim.bo.smartindent = true
 
 vim.cmd [[
-    autocmd FileType python nnoremap <leader>cbb Oimport pdb; pdb.set_trace() # BREAKPOINT<esc>
-    autocmd FileType javascript nnoremap <leader>cbb Odebugger // eslint-disable-line<esc>
-    autocmd FileType javascript nnoremap <leader>cpt oimport PropTypes from 'prop-types'<esc>
-    autocmd FileType javascript nnoremap <leader>clog oconsole.log('') // eslint-disable-line<esc>bbbbbbbla
+    autocmd FileType python nnoremap ,bb Oimport pdb; pdb.set_trace() # BREAKPOINT<esc>
+    autocmd FileType javascript nnoremap ,bb Odebugger // eslint-disable-line<esc>
+    autocmd FileType javascript nnoremap ,pt oimport PropTypes from 'prop-types'<esc>
+    autocmd FileType javascript nnoremap ,log oconsole.log('') // eslint-disable-line<esc>bbbbbbbla
 ]]

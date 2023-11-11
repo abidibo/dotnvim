@@ -27,8 +27,6 @@ return {
             })
 
             lsp_zero.on_attach(function(client, bufnr)
-                vim.keymap.set("n", "g?", function() vim.diagnostic.open_float() end,
-                    { buffer = bufnr, remap = false, desc = 'View line diagnostics' })
                 vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end,
                     { buffer = bufnr, remap = false, desc = 'Go to definition' })
                 vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end,
@@ -97,13 +95,6 @@ return {
                         local lua_opts = lsp_zero.nvim_lua_ls()
                         require('lspconfig').lua_ls.setup(lua_opts)
                     end,
-                    pyright = function()
-                        require('lspconfig').pyright.setup({
-                            settings = {
-                                stubPath = vim.fn.stdpath("data") .. "/lazy/python-type-stubs"
-                            }
-                        })
-                    end,
                     -- pylsp = function()
                     --     require('lspconfig').pylsp.setup({
                     --         settings = {
@@ -150,8 +141,4 @@ return {
         "L3MON4D3/LuaSnip",
         dependencies = { "rafamadriz/friendly-snippets" },
     },
-    {
-        "microsoft/python-type-stubs",
-        cond = false
-    }
 }

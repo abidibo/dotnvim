@@ -28,7 +28,7 @@ return {
                 client.server_capabilities.publishDiagnostics = false -- 0.8 and later
             end
             if client.supports_method("textDocument/formatting") then
-              vim.keymap.set("n", "<leader>cf", function()
+              vim.keymap.set("n", "<Leader>cf", function()
                 vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
               end, { buffer = bufnr, desc = "[lsp] format" })
 
@@ -45,7 +45,7 @@ return {
             end
 
             if client.supports_method("textDocument/rangeFormatting") then
-              vim.keymap.set("x", "<leader>cf", function()
+              vim.keymap.set("x", "<Leader>cf", function()
                 vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
               end, { buffer = bufnr, desc = "[lsp] format" })
             end

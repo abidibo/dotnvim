@@ -1,6 +1,4 @@
-return {
-    "iamcco/markdown-preview.nvim",
-    build = ":call mkdp#util#install()",
-    lazy = true,
-    ft = { "md", "markdown" },
+return { "iamcco/markdown-preview.nvim",
+	ft={"markdown"},
+	build = function() vim.fn["mkdp#util#install"]() end,
 }
