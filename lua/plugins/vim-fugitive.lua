@@ -19,5 +19,6 @@ return {
         vim.api.nvim_set_keymap("n", "<leader>gd", ":Gvdiffsplit!<CR>", { noremap = true })
         vim.api.nvim_set_keymap("n", "<leader>gdh", ":diffget //2<CR>", { noremap = true })
         vim.api.nvim_set_keymap("n", "<leader>gdl", ":diffget //3<CR>", { noremap = true })
+        vim.api.nvim_set_keymap("n", "<leader>gdf", ":Git -c pager.diff=delta diff<CR>", { noremap = true })
     end
 }
