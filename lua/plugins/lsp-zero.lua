@@ -5,7 +5,7 @@ return {
         config = function()
             require("neodev").setup({})
             local lsp_zero = require("lsp-zero")
-            lsp_zero.extend_lspconfig()
+            -- lsp_zero.extend_lspconfig()
             -- lsp_zero.preset("recommended")
 
             local cmp = require('cmp')
@@ -26,32 +26,43 @@ return {
                 -- },
             })
 
-            lsp_zero.on_attach(function(client, bufnr)
-                vim.keymap.set("n", "g?", function() vim.diagnostic.open_float() end,
-                    { buffer = bufnr, remap = false, desc = 'View line diagnostics' })
-                vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end,
-                    { buffer = bufnr, remap = false, desc = 'Go to definition' })
-                vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end,
-                    { buffer = bufnr, remap = false, desc = 'Go to declaration' })
-                vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end,
-                    { buffer = bufnr, remap = false, desc = 'Go to implementation' })
-                vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end,
-                    { buffer = bufnr, remap = false, desc = 'Show documentation' })
-                -- vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, { buffer = bufnr, remap = false })
-                -- vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, { buffer = bufnr, remap = false })
-                vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, { buffer = bufnr, remap = false })
-                vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, { buffer = bufnr, remap = false })
-                vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end,
-                    { buffer = bufnr, remap = false, desc = 'Code actions' })
-                vim.keymap.set("n", "<leader>cn", function() vim.lsp.buf.rename() end,
-                    { buffer = bufnr, remap = false, desc = 'Rename' })
-                -- vim.keymap.set("i", "<c-h>", function() vim.lsp.buf.signature_help() end, { buffer = bufnr, remap = false })
-                vim.keymap.set("n", "<leader>cf", function() vim.lsp.buf.format() end,
-                    { buffer = bufnr, remap = false, desc = 'Code format' })
-            end)
+            lsp_zero.on_attach(
+                function(client, bufnr)
+                    vim.keymap.set("n", "g?", function() vim.diagnostic.open_float() end,
+                        { buffer = bufnr, remap = false, desc = 'View line diagnostics' })
+                    vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end,
+                        { buffer = bufnr, remap = false, desc = 'Go to definition' })
+                    vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end,
+                        { buffer = bufnr, remap = false, desc = 'Go to declaration' })
+                    vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end,
+                        { buffer = bufnr, remap = false, desc = 'Go to implementation' })
+                    vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end,
+                        { buffer = bufnr, remap = false, desc = 'Show documentation' })
+                    -- vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, { buffer = bufnr, remap = false })
+                    -- vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, { buffer = bufnr, remap = false })
+                    vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end,
+                        { buffer = bufnr, remap = false })
+                    vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end,
+                        { buffer = bufnr, remap = false })
+                    vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end,
+                        { buffer = bufnr, remap = false, desc = 'Code actions' })
+                    vim.keymap.set("n", "<leader>cn", function() vim.lsp.buf.rename() end,
+                        { buffer = bufnr, remap = false, desc = 'Rename' })
+                    -- vim.keymap.set("i", "<c-h>", function() vim.lsp.buf.signature_help() end, { buffer = bufnr, remap = false })
+                    vim.keymap.set("n", "<leader>cf", function() vim.lsp.buf.format() end,
+                        { buffer = bufnr, remap = false, desc = 'Code format' })
+                end
+            )
 
             vim.diagnostic.config({
                 virtual_text = true
+            })
+
+            lsp_zero.set_sign_icons({
+                error = '✘',
+                warn = '▲',
+                hint = '⚑',
+                info = '»'
             })
 
             require('luasnip.loaders.from_vscode').lazy_load()
@@ -84,6 +95,8 @@ return {
                     { name = 'path', keyword_length = 2 },
                 }
             })
+
+            -- DBUI utils
             vim.cmd [[
                 autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
             ]]
@@ -100,26 +113,17 @@ return {
                     pyright = function()
                         require('lspconfig').pyright.setup({
                             settings = {
-                                stubPath = vim.fn.stdpath("data") .. "/lazy/python-type-stubs"
+                                stubPath = vim.fn.stdpath("data") .. "/lazy/python-type-stubs",
+                                python = {
+                                    analysis = {
+                                        autoSearchPaths = true,
+                                        useLibraryCodeForTypes = true,
+                                        diagnosticMode = 'openFilesOnly',
+                                    },
+                                },
                             }
                         })
                     end,
-                    -- pylsp = function()
-                    --     require('lspconfig').pylsp.setup({
-                    --         settings = {
-                    --             pylsp = {
-                    --                 plugins = {
-                    --                     mccabe = { enabled = false },
-                    --                     -- pyflakes = { enabled = false },
-                    --                     -- flake8 = { enabled = false },
-                    --                     black = { enabled = true },
-                    --                     rope_autoimport = { enabled = true },
-                    --                     -- rope_completion = { enabled = true },
-                    --                 }
-                    --             }
-                    --         }
-                    --     })
-                    -- end
                 }
             })
         end
