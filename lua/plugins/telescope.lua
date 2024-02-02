@@ -4,9 +4,14 @@ return {
         tag = '0.1.3',
         dependencies = { 'nvim-lua/plenary.nvim' },
         config = function()
+            -- local trouble = require("trouble.providers.telescope")
             require('telescope').setup(
                 {
                     defaults = {
+                        -- mappings = {
+                        --   i = { ["<c-q>"] = trouble.open_with_trouble },
+                        --   n = { ["<c-q>"] = trouble.open_with_trouble },
+                        -- },
                         prompt_prefix = "   ",
                         initial_mode = "insert",
                         selection_strategy = "reset",
@@ -65,6 +70,8 @@ return {
                 { noremap = true, silent = true, desc = 'Live grep' })
             vim.api.nvim_set_keymap('n', '<leader>f*', "<cmd>Telescope grep_string<CR>",
                 { noremap = true, silent = true, desc = 'Grep under cursor' })
+            vim.api.nvim_set_keymap('n', '<leader>fgu', "<cmd>Telescope git_submodules<CR>",
+                { noremap = true, silent = true, desc = 'Git submodules' })
 
             vim.api.nvim_set_keymap('n', '<leader>cr', "<cmd>Telescope lsp_references<CR>",
                 { noremap = true, silent = true, desc = 'LSP references' })
@@ -74,8 +81,8 @@ return {
                 { noremap = true, silent = true, desc = "LSP workspace symbols" })
             vim.api.nvim_set_keymap('n', '<leader>cd', "<cmd>Telescope diagnostics<CR>",
                 { noremap = true, silent = true, desc = "Diagnostics" })
-            vim.api.nvim_set_keymap('n', '<leader>ct', "<cmd>Telescope treesitter<CR>",
-                { noremap = true, silent = true, desc = "Treesitter" })
+            -- vim.api.nvim_set_keymap('n', '<leader>ct', "<cmd>Telescope treesitter<CR>",
+            --     { noremap = true, silent = true, desc = "Treesitter" })
 
 
             vim.keymap.set('n', '<leader>f/', function()

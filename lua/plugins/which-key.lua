@@ -25,6 +25,7 @@ return {
             ["<leader>s"] = { name = "+ System" },
             ["<leader>v"] = { name = "+ Misc" },
             ["<leader>g"] = { name = "+ Git" },
+            ["<leader>ct"] = { name = "+ Trouble" },
         })
     end
 }

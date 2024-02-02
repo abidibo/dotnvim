@@ -12,7 +12,6 @@ return {
         vim.api.nvim_set_keymap("n", "<leader>glog", ":0Gclog<CR>", { noremap = true })
         vim.api.nvim_set_keymap("n", "<leader>ggrep", ":Ggrep<Space>", { noremap = true })
         vim.api.nvim_set_keymap("n", "<leader>gm", ":Gmove<Space>", { noremap = true })
-        vim.api.nvim_set_keymap("n", "<leader>gb", ":Git branch<Space>", { noremap = true })
         vim.api.nvim_set_keymap("n", "<leader>go", ":Git checkout<Space>", { noremap = true })
         vim.api.nvim_set_keymap("n", "<leader>gp", ":Git push<CR>", { noremap = true })
         vim.api.nvim_set_keymap("n", "<leader>gl", ":Git pull<CR>", { noremap = true })
